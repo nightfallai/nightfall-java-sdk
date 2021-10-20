@@ -1,0 +1,9 @@
+version: 2
+updates:
+    # Enable version updates for Maven
+    - package-ecosystem: "maven"
+      directory: "/"
+      # Check for updates once daily
+      schedule:
+          interval: "daily"
+
