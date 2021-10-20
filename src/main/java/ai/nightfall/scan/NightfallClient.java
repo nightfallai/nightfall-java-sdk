@@ -96,7 +96,8 @@ public class NightfallClient implements Closeable {
             throw new NightfallClientException("processing scan request: " + e.getMessage());
         }
 
-        return this.issueRequest("/v3/scan", "POST", jsonBody, null, ScanTextResponse.class);
+        MediaType json = MediaType.parse("application/json");
+        return this.issueRequest("/v3/scan", "POST", json, jsonBody, null, ScanTextResponse.class);
     }
 
     /**
@@ -267,7 +268,8 @@ public class NightfallClient implements Closeable {
             throw new NightfallClientException("processing init-upload request: " + e.getMessage());
         }
 
-        return this.issueRequest("/v3/upload", "POST", jsonBody, null, FileUpload.class);
+        MediaType json = MediaType.parse("application/json");
+        return this.issueRequest("/v3/upload", "POST", json, jsonBody, null, FileUpload.class);
     }
 
     /**
@@ -283,7 +285,8 @@ public class NightfallClient implements Closeable {
     private boolean uploadFileChunk(UploadFileChunkRequest request) {
         Headers headers = Headers.of("X-Upload-Offset", Long.toString(request.getFileOffset()));
         String path = "/v3/upload/" + request.getFileUploadID().toString();
-        this.issueRequest(path, "PATCH", request.getContent(), headers, Void.class);
+        MediaType octetStream = MediaType.parse("application/octet-stream");
+        this.issueRequest(path, "PATCH", octetStream, request.getContent(), headers, Void.class);
         return true;
     }
 
@@ -297,7 +300,8 @@ public class NightfallClient implements Closeable {
      */
     private FileUpload completeFileUpload(CompleteFileUploadRequest request) {
         String path = "/v3/upload/" + request.getFileUploadID().toString() + "/finish";
-        return this.issueRequest(path, "POST", new byte[0], null, FileUpload.class);
+        MediaType json = MediaType.parse("application/json");
+        return this.issueRequest(path, "POST", json, new byte[0], null, FileUpload.class);
     }
 
     /**
@@ -319,7 +323,8 @@ public class NightfallClient implements Closeable {
             throw new NightfallClientException("processing scan file request: " + e.getMessage());
         }
 
-        return this.issueRequest(path, "POST", jsonBody, null, ScanFileResponse.class);
+        MediaType json = MediaType.parse("application/json");
+        return this.issueRequest(path, "POST", json, jsonBody, null, ScanFileResponse.class);
     }
 
     /**
@@ -335,7 +340,7 @@ public class NightfallClient implements Closeable {
      * @throws NightfallClientException thrown if an unexpected error occurs while processing the request
      * @throws NightfallAPIException thrown if the API returns a 4xx or 5xx error code
      */
-    private <E> E issueRequest(String path, String method, byte[] body, Headers headers, Class<E> responseClass) {
+    private <E> E issueRequest(String path, String method, MediaType mediaType, byte[] body, Headers headers, Class<E> responseClass) {
         String url = API_HOST + path;
         Request.Builder builder = new Request.Builder().url(url);
 
@@ -346,7 +351,7 @@ public class NightfallClient implements Closeable {
 
         RequestBody reqBody = null;
         if (body != null && body.length > 0) {
-            reqBody = RequestBody.create(body, MediaType.parse("application/json"));
+            reqBody = RequestBody.create(body, mediaType);
         } else if (!method.equals("GET") && !method.equals("HEAD")) {
             reqBody = RequestBody.create(new byte[0]);
         }
