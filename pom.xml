@@ -4,9 +4,36 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>nightfall</groupId>
-    <artifactId>api</artifactId>
+    <groupId>ai.nightfall.api</groupId>
+    <artifactId>dlp-scan</artifactId>
     <version>0.1</version>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>The Nightfall Scanner provides Java bindings for our developer platform, which allows clients
+        to scan their data for sensitive information such as PII and PHI.</description>
+    <url>https://docs.nightfall.ai/</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Evan Fuller</name>
+            <email>evan@nightfall.ai</email>
+            <organization>Nightfall AI</organization>
+            <organizationUrl>https://nightfall.ai/</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/nightfallai/nightfall-java-sdk.git</connection>
+        <developerConnection>scm:git:ssh://github.com/nightfallai/nightfall-java-sdk.git</developerConnection>
+        <url>https://github.com/nightfallai/nightfall-java-sdk</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,7 +49,7 @@
             <resource>
                 <directory>${project.basedir}</directory>
                 <includes>
-                    <include>LICENSE.txt</include>
+                    <include>LICENSE</include>
                 </includes>
             </resource>
         </resources>
@@ -39,6 +66,32 @@
                         <configuration>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
