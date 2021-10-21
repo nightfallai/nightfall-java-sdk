@@ -2,42 +2,64 @@ package ai.nightfall.scan.model;
 
 import java.util.UUID;
 
+/**
+ * An object representing a request to upload a chunk of file data to the Nightfall API.
+ */
 public class UploadFileChunkRequest {
     private UUID fileUploadID;
     private long fileOffset;
     private byte[] content;
 
+    /**
+     * Create a new instance of a file chunk upload request.
+     * @param fileUploadID the ID of the file
+     * @param fileOffset the offset at which to upload bytes
+     */
     public UploadFileChunkRequest(UUID fileUploadID, long fileOffset) {
         this.fileUploadID = fileUploadID;
         this.fileOffset = fileOffset;
     }
 
+    /**
+     * Create a new instance of a file chunk upload request.
+     * @param fileUploadID the ID of the file
+     * @param fileOffset the offset at which to upload bytes
+     * @param content the payload bytes to upload
+     */
     public UploadFileChunkRequest(UUID fileUploadID, long fileOffset, byte[] content) {
         this.fileUploadID = fileUploadID;
         this.fileOffset = fileOffset;
         this.content = content;
     }
 
+    /**
+     *
+     * @return the file ID
+     */
     public UUID getFileUploadID() {
         return fileUploadID;
     }
 
-    public void setFileUploadID(UUID fileUploadID) {
-        this.fileUploadID = fileUploadID;
-    }
-
+    /**
+     *
+     * @return the offset at which to upload bytes
+     */
     public long getFileOffset() {
         return fileOffset;
     }
 
-    public void setFileOffset(long fileOffset) {
-        this.fileOffset = fileOffset;
-    }
-
+    /**
+     *
+     * @return the payload bytes to upload
+     */
     public byte[] getContent() {
         return content;
     }
 
+    /**
+     *
+     * @param content the content to upload
+     */
     public void setContent(byte[] content) {
         this.content = content;
     }

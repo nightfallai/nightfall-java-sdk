@@ -11,8 +11,12 @@ import java.util.List;
  */
 public class ScanTextResponse {
     @JsonProperty("findings")
-    public List<List<Finding>> findings;
+    private List<List<Finding>> findings;
 
+    /**
+     *
+     * @return the findings
+     */
     public List<List<Finding>> getFindings() {
         return findings;
     }

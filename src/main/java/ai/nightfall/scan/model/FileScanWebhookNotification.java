@@ -34,51 +34,53 @@ public class FileScanWebhookNotification {
     @JsonProperty("errors")
     private List<NightfallErrorResponse> errors;
 
+    /**
+     *
+     * @return a URL referring to the location where findings may be downloaded from
+     */
     public String getFindingsURL() {
         return findingsURL;
     }
 
-    public void setFindingsURL(String findingsURL) {
-        this.findingsURL = findingsURL;
-    }
-
+    /**
+     *
+     * @return the point in time when the provided findings URL expires. After this date elapses, the findings
+     * will no longer be accessible via this URL.
+     */
     public Date getValidUntil() {
         return validUntil;
     }
 
-    public void setValidUntil(Date validUntil) {
-        this.validUntil = validUntil;
-    }
-
+    /**
+     *
+     * @return the file ID associated with these scan results
+     */
     public UUID getUploadID() {
         return uploadID;
     }
 
-    public void setUploadID(UUID uploadID) {
-        this.uploadID = uploadID;
-    }
-
+    /**
+     *
+     * @return true if and only if any findings were detected in the file represented by `uploadID`, otherwise false.
+     */
     public boolean isFindingsPresent() {
         return findingsPresent;
     }
 
-    public void setFindingsPresent(boolean findingsPresent) {
-        this.findingsPresent = findingsPresent;
-    }
-
+    /**
+     *
+     * @return the metadata that the client provided with the initial request, often used for correlating the file
+     * that this scan result represents.
+     */
     public String getRequestMetadata() {
         return requestMetadata;
     }
 
-    public void setRequestMetadata(String requestMetadata) {
-        this.requestMetadata = requestMetadata;
-    }
-
+    /**
+     *
+     * @return a list of errors that was encountered by the API while scanning the file.
+     */
     public List<NightfallErrorResponse> getErrors() {
         return errors;
-    }
-
-    public void setErrors(List<NightfallErrorResponse> errors) {
-        this.errors = errors;
     }
 }

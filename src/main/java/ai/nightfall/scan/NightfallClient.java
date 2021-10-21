@@ -7,7 +7,7 @@ import ai.nightfall.scan.model.InitializeFileUploadRequest;
 import ai.nightfall.scan.model.NightfallAPIException;
 import ai.nightfall.scan.model.NightfallClientException;
 import ai.nightfall.scan.model.NightfallErrorResponse;
-import ai.nightfall.scan.model.NightfallFileUploadTimeoutException;
+import ai.nightfall.scan.model.NightfallRequestTimeoutException;
 import ai.nightfall.scan.model.ScanFileRequest;
 import ai.nightfall.scan.model.ScanFileResponse;
 import ai.nightfall.scan.model.ScanTextRequest;
@@ -84,6 +84,7 @@ public class NightfallClient implements Closeable {
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
      * @throws IllegalArgumentException thrown if `request` is null
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
      */
     public ScanTextResponse scan(ScanTextRequest request) {
         if (request == null) {
@@ -118,7 +119,7 @@ public class NightfallClient implements Closeable {
      * @return an acknowledgment that the asynchronous scan has been initiated.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
-     * @throws NightfallFileUploadTimeoutException thrown if execution time exceeds the provided `timeout`
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
      */
     public ScanFileResponse scanFile(ScanFileRequest request, InputStream content, long contentSizeBytes) {
         return scanFile(request, content, contentSizeBytes, null);
@@ -143,7 +144,8 @@ public class NightfallClient implements Closeable {
      * @return an acknowledgment that the asynchronous scan has been initiated.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
-     * @throws NightfallFileUploadTimeoutException thrown if execution time exceeds the provided `timeout`
+     * @throws NightfallRequestTimeoutException thrown if execution time exceeds the provided `timeout`, or if the
+     * request is aborted because the timeout is exceeded
      */
     public ScanFileResponse scanFile(ScanFileRequest request, InputStream content, long contentSizeBytes, Duration timeout) {
         if (request == null) {
@@ -248,7 +250,7 @@ public class NightfallClient implements Closeable {
 
     private void checkDeadline(Instant deadline) {
         if (deadline != null && Instant.now().isAfter(deadline)) {
-            throw new NightfallFileUploadTimeoutException("timed out while uploading file");
+            throw new NightfallRequestTimeoutException("timed out while uploading file");
         }
     }
 
@@ -259,6 +261,7 @@ public class NightfallClient implements Closeable {
      * @return an object representing the file upload.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
      */
     private FileUpload initializeFileUpload(InitializeFileUploadRequest request) {
         byte[] jsonBody;
@@ -281,6 +284,7 @@ public class NightfallClient implements Closeable {
      * @return true if the chunk was uploaded
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
      */
     private boolean uploadFileChunk(UploadFileChunkRequest request) {
         Headers headers = Headers.of("X-Upload-Offset", Long.toString(request.getFileOffset()));
@@ -297,6 +301,7 @@ public class NightfallClient implements Closeable {
      * @return an object representing the file upload.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
      */
     private FileUpload completeFileUpload(CompleteFileUploadRequest request) {
         String path = "/v3/upload/" + request.getFileUploadID().toString() + "/finish";
@@ -313,6 +318,7 @@ public class NightfallClient implements Closeable {
      * @return an acknowledgment that the asynchronous scan has been initiated.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
      */
     private ScanFileResponse scanUploadedFile(ScanFileRequest request, UUID fileID) {
         String path = "/v3/upload/" + fileID.toString() + "/scan";
@@ -339,6 +345,7 @@ public class NightfallClient implements Closeable {
      * @return an instance of the `responseClass`
      * @throws NightfallClientException thrown if an unexpected error occurs while processing the request
      * @throws NightfallAPIException thrown if the API returns a 4xx or 5xx error code
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
      */
     private <E> E issueRequest(String path, String method, MediaType mediaType, byte[] body, Headers headers, Class<E> responseClass) {
         String url = API_HOST + path;
@@ -398,7 +405,7 @@ public class NightfallClient implements Closeable {
                 // If OkHTTP times out, allow retries
                 if (e.getMessage().equals("timeout")) {
                     if (attempt >= this.retryCount - 1) {
-                        throw new NightfallFileUploadTimeoutException("timed out uploading file");
+                        throw new NightfallRequestTimeoutException("timed out uploading file");
                     }
 
                     try { Thread.sleep(1000); } catch(InterruptedException ee) {}
@@ -432,8 +439,6 @@ public class NightfallClient implements Closeable {
         private Duration writeTimeout = Duration.ofSeconds(60);
         private int maxIdleConnections = 100;
         private Duration keepAliveDuration = Duration.ofSeconds(30);
-
-        public Builder() {}
 
         /**
          * Builds and returns the client with all default values. The API key is loaded from the environment variable

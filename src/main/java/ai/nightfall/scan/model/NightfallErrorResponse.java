@@ -22,18 +22,34 @@ public class NightfallErrorResponse {
     @JsonProperty("additionalData")
     private Map<String, String> additionalData;
 
+    /**
+     *
+     * @return the error code returned by the API
+     */
     public int getCode() {
         return code;
     }
 
+    /**
+     *
+     * @return the error message returned by the API
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     *
+     * @return additional details describing the circumstance surrounding the error
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     *
+     * @return supplemental data that may be useful in debugging the error message
+     */
     public Map<String, String> getAdditionalData() {
         return additionalData;
     }
