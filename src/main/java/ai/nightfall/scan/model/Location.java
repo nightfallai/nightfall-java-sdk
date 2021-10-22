@@ -23,7 +23,7 @@ public class Location {
 
     /**
      *
-     * @return the codepoint range in which a finding was detected. This differs from byte range since a code point
+     * @return the codepoint range in which a finding was detected. This differs from byte range since a codepoint
      * may contain multiple bytes.
      */
     public Range getCodepointRange() {

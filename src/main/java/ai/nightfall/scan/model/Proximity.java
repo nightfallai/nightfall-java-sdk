@@ -3,7 +3,7 @@ package ai.nightfall.scan.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * An object representing a range of bytes to consider around a candidate match.
+ * An object representing a range of bytes to consider around a candidate finding.
  */
 public class Proximity {
 
@@ -25,7 +25,7 @@ public class Proximity {
 
     /**
      *
-     * @return the number of bytes to consider leading up to a candidate match
+     * @return the number of bytes to consider leading up to a candidate finding
      */
     public int getWindowBefore() {
         return windowBefore;
@@ -33,7 +33,7 @@ public class Proximity {
 
     /**
      *
-     * @return the number of bytes to consider trailing a candidate match
+     * @return the number of bytes to consider trailing a candidate finding
      */
     public int getWindowAfter() {
         return windowAfter;

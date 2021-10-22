@@ -75,15 +75,15 @@ public class NightfallClient implements Closeable {
 
     /**
      * Scans the provided plaintext against the provided detectors, and returns all findings. The response object will
-     * contain a list of lists representing the findings. Each index `i` in the findings array will correspond one-to-one
+     * contain a list of lists representing the findings. Each index <code>i</code> in the findings array will correspond one-to-one
      * with the input request payload list, so all findings stored in a given sub-list refer to matches that occurred
-     * in the `i`th index of the request payload.
+     * in the <code>i</code>th index of the request payload.
      * @param request the data to scan, along with the configuration describing how to scan the data. The
      *                request payload may not exceed 500KB.
      * @return an object containing the findings from each item in the request payload
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
-     * @throws IllegalArgumentException thrown if `request` is null
+     * @throws IllegalArgumentException thrown if <code>request</code> is null
      * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
      */
     public ScanTextResponse scan(ScanTextRequest request) {
@@ -106,10 +106,10 @@ public class NightfallClient implements Closeable {
      * calling this method for a given file is equivalent to (1) manually initializing a file upload session,
      * (2) uploading all chunks of the file, (3) completing the upload, and (4) triggering a scan of the file.
      *
-     * The maximum allowed `contentSizeBytes` is dependent on the terms of your current
+     * The maximum allowed <code>contentSizeBytes</code> is dependent on the terms of your current
      * Nightfall usage plan agreement; check the Nightfall dashboard for more details.
      *
-     * This method consumes the provided `InputStream`, but it *does not* close it; closing remains the caller's
+     * This method consumes the provided <code>InputStream</code>, but it *does not* close it; closing remains the caller's
      * responsibility.
      *
      * @param request contains configuration describing which detectors to use to scan the file, as well as a webhook
@@ -130,10 +130,10 @@ public class NightfallClient implements Closeable {
      * calling this method for a given file is equivalent to (1) manually initializing a file upload session,
      * (2) uploading all chunks of the file, (3) completing the upload, and (4) triggering a scan of the file.
      *
-     * The maximum allowed `contentSizeBytes` is dependent on the terms of your current
+     * The maximum allowed <code>contentSizeBytes</code> is dependent on the terms of your current
      * Nightfall usage plan agreement; check the Nightfall dashboard for more details.
      *
-     * This method consumes the provided `InputStream`, but it *does not* close it; closing remains the caller's
+     * This method consumes the provided <code>InputStream</code>, but it *does not* close it; closing remains the caller's
      * responsibility.
      *
      * @param request contains configuration describing which detectors to use to scan the file, as well as a webhook
@@ -144,7 +144,7 @@ public class NightfallClient implements Closeable {
      * @return an acknowledgment that the asynchronous scan has been initiated.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
-     * @throws NightfallRequestTimeoutException thrown if execution time exceeds the provided `timeout`, or if the
+     * @throws NightfallRequestTimeoutException thrown if execution time exceeds the provided <code>timeout</code>, or if the
      * request is aborted because the timeout is exceeded
      */
     public ScanFileResponse scanFile(ScanFileRequest request, InputStream content, long contentSizeBytes, Duration timeout) {
@@ -277,8 +277,8 @@ public class NightfallClient implements Closeable {
 
     /**
      * Uploads the bytes stored at the provided offset of a file. The byte offset provided should be an exact
-     * multiple of the `chunkSize` returned by the response when the upload session was created. The number of bytes
-     * provided in the request should exactly match `chunkSize`, except if this chunk is the last chunk of the file;
+     * multiple of the <code>chunkSize</code> returned by the response when the upload session was created. The number of bytes
+     * provided in the request should exactly match <code>chunkSize</code>, except if this chunk is the last chunk of the file;
      * then it may be less.
      * @param request the data to upload, as well as metadata such as the offset at which to upload.
      * @return true if the chunk was uploaded
@@ -310,9 +310,9 @@ public class NightfallClient implements Closeable {
     }
 
     /**
-     * Triggers a scan of the file identified by the provided `fileID`. As the underlying file might be arbitrarily
+     * Triggers a scan of the file identified by the provided <code>fileID</code>. As the underlying file might be arbitrarily
      * large, this scan will be conducted asynchronously. Results from the scan will be delivered to the webhook URL
-     * provided in the `request` payload.
+     * provided in the <code>request</code> payload.
      * @param request contains metadata identifying which file to scan, as well as the configuration that
      *                describes which detectors to use when scanning.
      * @return an acknowledgment that the asynchronous scan has been initiated.
@@ -335,14 +335,14 @@ public class NightfallClient implements Closeable {
 
     /**
      * Issues an HTTP request to the provided resource. If the request is successful, the response body will be
-     * deserialized into an object based on the provided `responseClass`. If the response indicates a rate limiting
+     * deserialized into an object based on the provided <code>responseClass</code>. If the response indicates a rate limiting
      * error, the request will be retried after a short sleep.
      * @param path the HTTP resource path
      * @param method the HTTP verb
      * @param body the HTTP request body
      * @param headers HTTP headers
      * @param responseClass the class to deserialize results into
-     * @return an instance of the `responseClass`
+     * @return an instance of the <code>responseClass</code>
      * @throws NightfallClientException thrown if an unexpected error occurs while processing the request
      * @throws NightfallAPIException thrown if the API returns a 4xx or 5xx error code
      * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
@@ -442,7 +442,7 @@ public class NightfallClient implements Closeable {
 
         /**
          * Builds and returns the client with all default values. The API key is loaded from the environment variable
-         * `NIGHTFALL_API_KEY`. The underlying client manages an HTTP connection pool, so instantiating more than
+         * <code>NIGHTFALL_API_KEY</code>. The underlying client manages an HTTP connection pool, so instantiating more than
          * one Nightfall client is not necessary.
          * @return a Nightfall client
          * @throws IllegalArgumentException if no value is set for the API key
@@ -532,7 +532,7 @@ public class NightfallClient implements Closeable {
 
         /**
          * Sets the maximum number of idle connections in the underlying HTTP client. Be sure this value cooperates with
-         * the configuration for `fileUploadConcurrency`. If unset, defaults to 100.
+         * the configuration for <code>fileUploadConcurrency</code>. If unset, defaults to 100.
          * @param maxIdleConnections an integer in the range [1, 500]
          * @return the builder
          * @throws IllegalArgumentException if the argument falls outside the allowed range

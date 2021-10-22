@@ -6,9 +6,9 @@ import java.util.List;
 
 /**
  * An object that contains a set of detectors to be used when scanning content. Findings matches are
- * triggered according to the provided `logicalOp`; valid values are `ANY` (logical `OR`, i.e. a finding
- * is emitted only if any of the provided detectors match), or `ALL` (logical `AND`, i.e. a finding is
- * emitted only if all provided detectors match).
+ * triggered according to the provided <code>logicalOp</code>logicalOp; valid values are <code>ANY</code> (logical
+ * <code>OR</code>, i.e. a finding is emitted only if any of the provided detectors match), or <code>ALL</code>
+ * (logical <code>AND</code>, i.e. a finding is emitted only if all provided detectors match).
  */
 public class DetectionRule {
 
@@ -47,7 +47,7 @@ public class DetectionRule {
 
     /**
      *
-     * @param logicalOp a logical op; valid values `ANY` or `ALL`
+     * @param logicalOp a logical op; valid values <code>ANY</code> or <code>ALL</code>
      */
     public void setLogicalOp(String logicalOp) {
         this.logicalOp = logicalOp;

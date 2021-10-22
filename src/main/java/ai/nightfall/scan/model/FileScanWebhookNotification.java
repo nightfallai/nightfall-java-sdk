@@ -8,10 +8,10 @@ import java.util.UUID;
 
 /**
  * The request payload that is sent by Nightfall to a client-configured webhook URL to report the findings from
- * an asynchronous file scan. The findings themselves live in an external location referred to by `findingsURL`,
- * and will remain accessible until the time described by the field `validUntil`.
+ * an asynchronous file scan. The findings themselves live in an external location referred to by <code>findingsURL</code>,
+ * and will remain accessible until the time described by the field <code>validUntil</code>.
  *
- * The `findingsURL` must be considered sensitive; although the data stored at the URL is secure, the
+ * The <code>findingsURL</code> must be considered sensitive; although the data stored at the URL is secure, the
  * URL itself grants a temporary lease so that anyone with the link may download the data.
  */
 public class FileScanWebhookNotification {
@@ -61,7 +61,7 @@ public class FileScanWebhookNotification {
 
     /**
      *
-     * @return true if and only if any findings were detected in the file represented by `uploadID`, otherwise false.
+     * @return true if and only if any findings were detected in the file represented by <code>uploadID</code>, otherwise false.
      */
     public boolean isFindingsPresent() {
         return findingsPresent;

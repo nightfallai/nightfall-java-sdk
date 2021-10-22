@@ -15,7 +15,7 @@ public class ScanTextRequest {
     private ScanTextConfig config;
 
     /**
-     * Create a request to scan the provided `payload` against the provided scanning configuration `config`
+     * Create a request to scan the provided <code>payload</code> against the provided scanning configuration <code>config</code>
      * @param payload the content to scan
      * @param config the configuration to use to scan the content
      */
@@ -42,7 +42,7 @@ public class ScanTextRequest {
 
     /**
      *
-     * @return the configuration to use to scan the `payload` data
+     * @return the configuration to use to scan the <code>payload</code> data
      */
     public ScanTextConfig getConfig() {
         return config;
@@ -50,7 +50,7 @@ public class ScanTextRequest {
 
     /**
      *
-     * @param config the configuration to use to scan the `payload` data
+     * @param config the configuration to use to scan the <code>payload</code> data
      */
     public void setConfig(ScanTextConfig config) {
         this.config = config;

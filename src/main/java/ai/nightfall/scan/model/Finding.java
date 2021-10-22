@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * An object representing a match in the provided data.
+ * An object representing an occurrence of a configured detector (i.e. finding) in the provided data.
  */
 public class Finding {
     @JsonProperty("finding")
@@ -67,7 +67,7 @@ public class Finding {
 
     /**
      *
-     * @return the confidence that the data contained in `finding` is an instance of the matched detector
+     * @return the confidence that the data contained in <code>finding</code> is an instance of the matched detector
      */
     public String getConfidence() {
         return confidence;

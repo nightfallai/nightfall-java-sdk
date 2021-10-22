@@ -7,7 +7,7 @@ import java.util.UUID;
 
 /**
  * An object that represents a data type or category of information. Detectors are used to scan content
- * for matches.
+ * for findings.
  */
 public class Detector {
 
@@ -88,8 +88,8 @@ public class Detector {
 
     /**
      *
-     * @param minConfidence the minimum confidence threshold. Valid values: `VERY_UNLIKELY`, `UNLIKELY`,
-     *                      `POSSIBLE`, `LIKELY`, `VERY_LIKELY`.
+     * @param minConfidence the minimum confidence threshold. Valid values: <code>VERY_UNLIKELY</code>, <code>UNLIKELY</code>,
+     *                      <code>POSSIBLE</code>, <code>LIKELY</code>, <code>VERY_LIKELY</code>.
      */
     public void setMinConfidence(String minConfidence) {
         this.minConfidence = minConfidence;
@@ -137,7 +137,7 @@ public class Detector {
 
     /**
      *
-     * @return the type of this detector. Valid values are `NIGHTFALL_DETECTOR`, `REGEX`, and `WORD_LIST`.
+     * @return the type of this detector. Valid values are <code>NIGHTFALL_DETECTOR</code>, <code>REGEX</code>, and <code>WORD_LIST</code>.
      */
     public String getDetectorType() {
         return detectorType;

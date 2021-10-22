@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
 
 /**
- * A container for a request to scan a file that was uploaded via the Nightfall API. Exactly one of `policyUUID`
- * or `policy` should be provided.
+ * A container for a request to scan a file that was uploaded via the Nightfall API. Exactly one of <code>policyUUID</code>
+ * or <code>policy</code> should be provided.
  */
 public class ScanFileRequest {
 

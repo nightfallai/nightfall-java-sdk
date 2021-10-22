@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * An object that describes a regular expression or list of keywords that may be used to disqualify a
- * candidate finding from triggering a match.
+ * candidate finding from triggering a detector match.
  */
 public class ExclusionRule {
 
@@ -44,7 +44,7 @@ public class ExclusionRule {
 
     /**
      *
-     * @return the match type represented by this exclusion rule. Valid values are `PARTIAL` or `FULL`.
+     * @return the match type represented by this exclusion rule. Valid values are <code>PARTIAL</code> or <code>FULL</code>.
      */
     public String getMatchType() {
         return matchType;
@@ -52,7 +52,7 @@ public class ExclusionRule {
 
     /**
      *
-     * @return the type of this exclusion rule. Valid values are `WORD_LIST` or `REGEX`. The corresponding field
+     * @return the type of this exclusion rule. Valid values are <code>WORD_LIST</code> or <code>REGEX</code>. The corresponding field
      * in this object must be set according to the value specified here.
      */
     public String getExclusionType() {
