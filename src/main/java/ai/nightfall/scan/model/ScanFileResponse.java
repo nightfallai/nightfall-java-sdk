@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.UUID;
 
+/**
+ * The object returned by the Nightfall API when an (asynchronous) file scan request was successfully triggered.
+ */
 public class ScanFileResponse {
 
     @JsonProperty("id")
@@ -12,10 +15,18 @@ public class ScanFileResponse {
     @JsonProperty("message")
     private String message;
 
+    /**
+     *
+     * @return the ID of the file whose scan was triggered
+     */
     public UUID getId() {
         return id;
     }
 
+    /**
+     *
+     * @return a status message describing the file scan
+     */
     public String getMessage() {
         return message;
     }
