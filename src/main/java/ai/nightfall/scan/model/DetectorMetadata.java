@@ -17,6 +17,7 @@ public class DetectorMetadata {
     private UUID uuid;
 
     /**
+     * Get the detector name.
      *
      * @return the name of the detector
      */
@@ -25,6 +26,7 @@ public class DetectorMetadata {
     }
 
     /**
+     * Get the detector UUID.
      *
      * @return the ID that uniquely identifies this detector
      */
@@ -34,9 +36,9 @@ public class DetectorMetadata {
 
     @Override
     public String toString() {
-        return "DetectorMetadata{" +
-                "name='" + name + '\'' +
-                ", uuid=" + uuid +
-                '}';
+        return "DetectorMetadata{"
+                + "name='" + name + '\''
+                + ", uuid=" + uuid
+                + '}';
     }
 }

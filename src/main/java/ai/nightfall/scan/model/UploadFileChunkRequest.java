@@ -12,6 +12,7 @@ public class UploadFileChunkRequest {
 
     /**
      * Create a new instance of a file chunk upload request.
+     *
      * @param fileUploadID the ID of the file
      * @param fileOffset the offset at which to upload bytes
      */
@@ -22,6 +23,7 @@ public class UploadFileChunkRequest {
 
     /**
      * Create a new instance of a file chunk upload request.
+     *
      * @param fileUploadID the ID of the file
      * @param fileOffset the offset at which to upload bytes
      * @param content the payload bytes to upload
@@ -33,6 +35,7 @@ public class UploadFileChunkRequest {
     }
 
     /**
+     * Get the file ID.
      *
      * @return the file ID
      */
@@ -41,6 +44,7 @@ public class UploadFileChunkRequest {
     }
 
     /**
+     * Get the file offset.
      *
      * @return the offset at which to upload bytes
      */
@@ -49,6 +53,7 @@ public class UploadFileChunkRequest {
     }
 
     /**
+     * Get the request payload.
      *
      * @return the payload bytes to upload
      */
@@ -57,6 +62,7 @@ public class UploadFileChunkRequest {
     }
 
     /**
+     * Set the request payload.
      *
      * @param content the content to upload
      */

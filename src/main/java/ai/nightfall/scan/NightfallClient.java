@@ -75,9 +75,10 @@ public class NightfallClient implements Closeable {
 
     /**
      * Scans the provided plaintext against the provided detectors, and returns all findings. The response object will
-     * contain a list of lists representing the findings. Each index <code>i</code> in the findings array will correspond one-to-one
-     * with the input request payload list, so all findings stored in a given sub-list refer to matches that occurred
-     * in the <code>i</code>th index of the request payload.
+     * contain a list of lists representing the findings. Each index <code>i</code> in the findings array will
+     * correspond one-to-one with the input request payload list, so all findings stored in a given sub-list refer to
+     * matches that occurred in the <code>i</code>th index of the request payload.
+     *
      * @param request the data to scan, along with the configuration describing how to scan the data. The
      *                request payload may not exceed 500KB.
      * @return an object containing the findings from each item in the request payload
@@ -106,11 +107,11 @@ public class NightfallClient implements Closeable {
      * calling this method for a given file is equivalent to (1) manually initializing a file upload session,
      * (2) uploading all chunks of the file, (3) completing the upload, and (4) triggering a scan of the file.
      *
-     * The maximum allowed <code>contentSizeBytes</code> is dependent on the terms of your current
+     * <p>The maximum allowed <code>contentSizeBytes</code> is dependent on the terms of your current
      * Nightfall usage plan agreement; check the Nightfall dashboard for more details.
      *
-     * This method consumes the provided <code>InputStream</code>, but it *does not* close it; closing remains the caller's
-     * responsibility.
+     * <p>This method consumes the provided <code>InputStream</code>, but it *does not* close it; closing remains
+     * the caller's responsibility.
      *
      * @param request contains configuration describing which detectors to use to scan the file, as well as a webhook
      *                URL for delivering the results of the scan.
@@ -130,24 +131,26 @@ public class NightfallClient implements Closeable {
      * calling this method for a given file is equivalent to (1) manually initializing a file upload session,
      * (2) uploading all chunks of the file, (3) completing the upload, and (4) triggering a scan of the file.
      *
-     * The maximum allowed <code>contentSizeBytes</code> is dependent on the terms of your current
+     * <p>The maximum allowed <code>contentSizeBytes</code> is dependent on the terms of your current
      * Nightfall usage plan agreement; check the Nightfall dashboard for more details.
      *
-     * This method consumes the provided <code>InputStream</code>, but it *does not* close it; closing remains the caller's
-     * responsibility.
+     * <p>This method consumes the provided <code>InputStream</code>, but it *does not* close it; closing remains
+     * the caller's responsibility.
      *
      * @param request contains configuration describing which detectors to use to scan the file, as well as a webhook
      *                URL for delivering the results of the scan.
      * @param content a stream of the bytes representing the file to upload
      * @param contentSizeBytes the size of the input stream
-     * @param timeout the allowed duration for the request; if the execution time exceeds this duration, the request will be aborted.
+     * @param timeout the allowed duration for the request; if the execution time exceeds this duration, the request
+     *                will be aborted.
      * @return an acknowledgment that the asynchronous scan has been initiated.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
-     * @throws NightfallRequestTimeoutException thrown if execution time exceeds the provided <code>timeout</code>, or if the
-     * request is aborted because the timeout is exceeded
+     * @throws NightfallRequestTimeoutException thrown if execution time exceeds the provided <code>timeout</code>,
+     *      or if the request is aborted because the timeout is exceeded
      */
-    public ScanFileResponse scanFile(ScanFileRequest request, InputStream content, long contentSizeBytes, Duration timeout) {
+    public ScanFileResponse scanFile(
+            ScanFileRequest request, InputStream content, long contentSizeBytes, Duration timeout) {
         if (request == null) {
             throw new IllegalArgumentException("request must be non-null");
         } else if (content == null) {
@@ -185,7 +188,9 @@ public class NightfallClient implements Closeable {
         return this.scanUploadedFile(request, upload.getFileID());
     }
 
-    private boolean doChunkedUpload(FileUpload upload, InputStream content, Instant deadline, AtomicReference<BaseNightfallException> uploadException) {
+    private boolean doChunkedUpload(
+            FileUpload upload, InputStream content, Instant deadline,
+            AtomicReference<BaseNightfallException> uploadException) {
         // Use a semaphore to avoid loading the entire stream into memory
         int numPermits = this.fileUploadConcurrency;
         Semaphore semaphore = new Semaphore(numPermits);
@@ -193,7 +198,7 @@ public class NightfallClient implements Closeable {
         AtomicBoolean allChunksSucceed = new AtomicBoolean(true);
         for (int offset = 0; offset < upload.getFileSizeBytes(); offset += upload.getChunkSize()) {
             semaphore.acquireUninterruptibly();
-            int index = offset / (int)upload.getChunkSize();
+            int index = offset / (int) upload.getChunkSize();
             System.out.println("offset index: " + index);
             checkDeadline(deadline);
 
@@ -257,6 +262,7 @@ public class NightfallClient implements Closeable {
     /**
      * Creates a file upload session. If this operation returns successfully, the ID returned as part of the
      * response object shall be used to refer to the file in all subsequent upload and scanning operations.
+     *
      * @param request contains metadata describing the requested file upload, such as the file size in bytes.
      * @return an object representing the file upload.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
@@ -277,9 +283,10 @@ public class NightfallClient implements Closeable {
 
     /**
      * Uploads the bytes stored at the provided offset of a file. The byte offset provided should be an exact
-     * multiple of the <code>chunkSize</code> returned by the response when the upload session was created. The number of bytes
-     * provided in the request should exactly match <code>chunkSize</code>, except if this chunk is the last chunk of the file;
-     * then it may be less.
+     * multiple of the <code>chunkSize</code> returned by the response when the upload session was created. The
+     * number of bytes provided in the request should exactly match <code>chunkSize</code>, except if this chunk is
+     * the last chunk of the file; then it may be less.
+     *
      * @param request the data to upload, as well as metadata such as the offset at which to upload.
      * @return true if the chunk was uploaded
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
@@ -297,6 +304,7 @@ public class NightfallClient implements Closeable {
     /**
      * Marks the file upload as complete, and coalesces all chunks into a single logical file. This method also
      * validates the uploaded bytes to make sure that they represent a file type for which Nightfall supports scans.
+     *
      * @param request contains metadata identifying the file upload, namely the upload ID.
      * @return an object representing the file upload.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
@@ -310,9 +318,10 @@ public class NightfallClient implements Closeable {
     }
 
     /**
-     * Triggers a scan of the file identified by the provided <code>fileID</code>. As the underlying file might be arbitrarily
-     * large, this scan will be conducted asynchronously. Results from the scan will be delivered to the webhook URL
-     * provided in the <code>request</code> payload.
+     * Triggers a scan of the file identified by the provided <code>fileID</code>. As the underlying file might be
+     * arbitrarily large, this scan will be conducted asynchronously. Results from the scan will be delivered to the
+     * webhook URL provided in the <code>request</code> payload.
+     *
      * @param request contains metadata identifying which file to scan, as well as the configuration that
      *                describes which detectors to use when scanning.
      * @return an acknowledgment that the asynchronous scan has been initiated.
@@ -335,8 +344,9 @@ public class NightfallClient implements Closeable {
 
     /**
      * Issues an HTTP request to the provided resource. If the request is successful, the response body will be
-     * deserialized into an object based on the provided <code>responseClass</code>. If the response indicates a rate limiting
-     * error, the request will be retried after a short sleep.
+     * deserialized into an object based on the provided <code>responseClass</code>. If the response indicates a
+     * rate limiting error, the request will be retried after a short sleep.
+     *
      * @param path the HTTP resource path
      * @param method the HTTP verb
      * @param body the HTTP request body
@@ -347,7 +357,8 @@ public class NightfallClient implements Closeable {
      * @throws NightfallAPIException thrown if the API returns a 4xx or 5xx error code
      * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
      */
-    private <E> E issueRequest(String path, String method, MediaType mediaType, byte[] body, Headers headers, Class<E> responseClass) {
+    private <E> E issueRequest(
+            String path, String method, MediaType mediaType, byte[] body, Headers headers, Class<E> responseClass) {
         String url = API_HOST + path;
         Request.Builder builder = new Request.Builder().url(url);
 
@@ -372,18 +383,12 @@ public class NightfallClient implements Closeable {
         int errorCode = 0;
         for (int attempt = 0; attempt < this.retryCount; attempt++) {
             try (Response response = call.execute()) {
-                System.out.println("just executed request with headers: " + headers);
                 if (!response.isSuccessful()) {
-                    System.out.println("unsuccessful result for attempt " + attempt + " with headers: " + headers);
-
                     try {
                         lastError = objectMapper.readValue(response.body().bytes(), NightfallErrorResponse.class);
                     } catch (Throwable t) {
                         // best effort to get more info, swallow failure
-                        System.out.println("failed to deserialize error, throwable: " + t.getMessage());
                     }
-
-                    System.out.println("response: " + response);
 
                     if (response.code() == 429 && attempt < this.retryCount - 1) {
                         Thread.sleep(1000);
@@ -391,7 +396,6 @@ public class NightfallClient implements Closeable {
                         continue;
                     }
 
-                    System.out.println("about to throw exception");
                     // cannot directly throw exception here because of Throwable catch branch; need to break
                     errorCode = response.code();
                     break;
@@ -408,7 +412,11 @@ public class NightfallClient implements Closeable {
                         throw new NightfallRequestTimeoutException("timed out uploading file");
                     }
 
-                    try { Thread.sleep(1000); } catch(InterruptedException ee) {}
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ee) {
+                        // swallow
+                    }
                     call = call.clone(); // cannot re-use the same call object
                     continue;
                 }
@@ -442,8 +450,9 @@ public class NightfallClient implements Closeable {
 
         /**
          * Builds and returns the client with all default values. The API key is loaded from the environment variable
-         * <code>NIGHTFALL_API_KEY</code>. The underlying client manages an HTTP connection pool, so instantiating more than
-         * one Nightfall client is not necessary.
+         * <code>NIGHTFALL_API_KEY</code>. The underlying client manages an HTTP connection pool, so instantiating
+         * more than one Nightfall client is not necessary.
+         *
          * @return a Nightfall client
          * @throws IllegalArgumentException if no value is set for the API key
          */
@@ -460,6 +469,7 @@ public class NightfallClient implements Closeable {
 
         /**
          * Sets the API key for the Nightfall Client.
+         *
          * @param apiKey a valid Nightfall API key
          * @return the builder
          */
@@ -473,6 +483,7 @@ public class NightfallClient implements Closeable {
          * may execute in parallel when uploading file bytes. Be cognizant of your HTTP connection pool settings
          * when deciding on a value in order to optimize your upload bandwidth.
          * Valid values are in the range [1, 100], inclusive. Defaults to 1 if unset.
+         *
          * @param concurrency an integer in the range [1, 100]
          * @return the builder
          * @throws IllegalArgumentException if the argument falls outside the allowed range
@@ -488,6 +499,7 @@ public class NightfallClient implements Closeable {
         /**
          * Sets the connection timeout for the underlying HTTP client. If unset, defaults to 10 seconds. If set
          * to 0, connections will not time out.
+         *
          * @param connectionTimeout a non-negative duration less than or equal to 60 seconds
          * @return the builder
          * @throws IllegalArgumentException if the argument falls outside the allowed range
@@ -503,6 +515,7 @@ public class NightfallClient implements Closeable {
         /**
          * Sets the read timeout for the underlying HTTP client. If unset, defaults to 30 seconds. If set
          * to 0, reads will not time out.
+         *
          * @param readTimeout a non-negative duration less than or equal to 120 seconds
          * @return the builder
          * @throws IllegalArgumentException if the argument falls outside the allowed range
@@ -518,6 +531,7 @@ public class NightfallClient implements Closeable {
         /**
          * Sets the write timeout for the underlying HTTP client. If unset, defaults to 60 seconds. If set
          * to 0, writes will not time out.
+         *
          * @param writeTimeout a non-negative duration less than or equal to 120 seconds
          * @return the builder
          * @throws IllegalArgumentException if the argument falls outside the allowed range
@@ -533,6 +547,7 @@ public class NightfallClient implements Closeable {
         /**
          * Sets the maximum number of idle connections in the underlying HTTP client. Be sure this value cooperates with
          * the configuration for <code>fileUploadConcurrency</code>. If unset, defaults to 100.
+         *
          * @param maxIdleConnections an integer in the range [1, 500]
          * @return the builder
          * @throws IllegalArgumentException if the argument falls outside the allowed range
@@ -548,12 +563,14 @@ public class NightfallClient implements Closeable {
         /**
          * Sets the keep-alive duration for a connection in the underlying HTTP connection pool. If unset,
          * defaults to 30 seconds.
+         *
          * @param keepAliveDuration a positive duration less than or equal to 120 seconds
          * @return the builder
          * @throws IllegalArgumentException if the argument falls outside the allowed range
          */
         public Builder withKeepAliveDuration(Duration keepAliveDuration) {
-            if (keepAliveDuration == null || keepAliveDuration.isNegative() || keepAliveDuration.isZero() || keepAliveDuration.getSeconds() > 120) {
+            if (keepAliveDuration == null || keepAliveDuration.isNegative() || keepAliveDuration.isZero()
+                    || keepAliveDuration.getSeconds() > 120) {
                 throw new IllegalArgumentException("keepAliveDuration must be a positive duration <= 120 seconds");
             }
             this.keepAliveDuration = keepAliveDuration;
@@ -561,7 +578,9 @@ public class NightfallClient implements Closeable {
         }
 
         /**
-         * Builds the client using the configured values, falling back on defaults if any values were not explicitly set.
+         * Builds the client using the configured values, falling back on defaults if any values
+         * were not explicitly set.
+         *
          * @return a Nightfall client
          * @throws IllegalArgumentException if the API key was not set
          */

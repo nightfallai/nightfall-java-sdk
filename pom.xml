@@ -22,7 +22,7 @@
             <resource>
                 <directory>${project.basedir}</directory>
                 <includes>
-                    <include>LICENSE.txt</include>
+                    <include>LICENSE</include>
                 </includes>
             </resource>
         </resources>
@@ -65,7 +65,7 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
-                            <failOnViolation>false</failOnViolation>
+                            <failOnViolation>true</failOnViolation>
                         </configuration>
                     </execution>
                 </executions>

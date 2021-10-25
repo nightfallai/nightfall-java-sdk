@@ -22,6 +22,7 @@ public class ExclusionRule {
 
     /**
      * Create an exclusion rule that uses a regular expression to make a disqualification decision.
+     *
      * @param regex the regular expression
      * @param matchType the match type; valid values are FULL or PARTIAL
      */
@@ -33,6 +34,7 @@ public class ExclusionRule {
 
     /**
      * Create an exclusion rule that uses a word list to make a disqualification decision.
+     *
      * @param wordList the word list
      * @param matchType the match type; valid values are FULL or PARTIAL
      */
@@ -43,23 +45,27 @@ public class ExclusionRule {
     }
 
     /**
+     * Get the match type.
      *
-     * @return the match type represented by this exclusion rule. Valid values are <code>PARTIAL</code> or <code>FULL</code>.
+     * @return the match type represented by this exclusion rule. Valid values are <code>PARTIAL</code> or
+     *      <code>FULL</code>.
      */
     public String getMatchType() {
         return matchType;
     }
 
     /**
+     * Get the exclusion type.
      *
-     * @return the type of this exclusion rule. Valid values are <code>WORD_LIST</code> or <code>REGEX</code>. The corresponding field
-     * in this object must be set according to the value specified here.
+     * @return the type of this exclusion rule. Valid values are <code>WORD_LIST</code> or <code>REGEX</code>.
+     *      The corresponding field in this object must be set according to the value specified here.
      */
     public String getExclusionType() {
         return exclusionType;
     }
 
     /**
+     * Get the regex.
      *
      * @return the regular expression to use to evaluate the exclusion rule
      */
@@ -68,6 +74,7 @@ public class ExclusionRule {
     }
 
     /**
+     * Get the word list.
      *
      * @return the word list to use to evaluate the exclusion rule
      */

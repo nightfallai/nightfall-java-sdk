@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The configuration object to use when scanning inline plaintext with the Nightfall API
+ * The configuration object to use when scanning inline plaintext with the Nightfall API.
  */
 public class ScanTextConfig {
 
@@ -21,6 +21,7 @@ public class ScanTextConfig {
 
     /**
      * Create a scan configuration with the provided detection rules.
+     *
      * @param detectionRuleUUIDs a list of detection rules to use to scan content (maximum length 10)
      * @param contextBytes the number of bytes of context (leading and trailing) to return with any matched findings
      * @return the scan configuration
@@ -31,6 +32,7 @@ public class ScanTextConfig {
 
     /**
      * Create a scan configuration with the provided detection rules.
+     *
      * @param detectionRules a list of detection rules to use to scan content (maximum length 10)
      * @param contextBytes the number of bytes of context (leading and trailing) to return with any matched findings
      * @return the scan configuration
@@ -41,6 +43,7 @@ public class ScanTextConfig {
 
     /**
      * Create a scan configuration with the provided inline detection rules and detection rule UUIDs.
+     *
      * @param detectionRuleUUIDs a list of detection rules to use to scan content (maximum length 10)
      * @param detectionRules a list of detection rules to use to scan content (maximum length 10)
      * @param contextBytes the number of bytes of context (leading and trailing) to return with any matched findings
@@ -52,6 +55,7 @@ public class ScanTextConfig {
     }
 
     /**
+     * Get the detection rule UUIDs.
      *
      * @return the detection rule UUIDs to use to scan the file
      */
@@ -60,6 +64,7 @@ public class ScanTextConfig {
     }
 
     /**
+     * Set the detection rule UUIDs.
      *
      * @param detectionRuleUUIDs the detection rule UUIDs to use to scan the file
      */
@@ -68,6 +73,7 @@ public class ScanTextConfig {
     }
 
     /**
+     * Get the detection rule UUIDs.
      *
      * @return the detection rules to use to scan the file
      */
@@ -76,6 +82,7 @@ public class ScanTextConfig {
     }
 
     /**
+     * Set the detection rules.
      *
      * @param detectionRules the detection rules to use to scan the file
      */
@@ -84,6 +91,7 @@ public class ScanTextConfig {
     }
 
     /**
+     * Get the number of context bytes.
      *
      * @return the number of bytes of context (leading and trailing) to return with any matched findings
      */
@@ -92,6 +100,7 @@ public class ScanTextConfig {
     }
 
     /**
+     * Set the number of context bytes.
      *
      * @param contextBytes the number of bytes of context (leading and trailing) to return with any matched findings
      */
@@ -101,10 +110,10 @@ public class ScanTextConfig {
 
     @Override
     public String toString() {
-        return "ScanTextConfig{" +
-                "detectionRuleUUIDs=" + detectionRuleUUIDs +
-                ", detectionRules=" + detectionRules +
-                ", contextBytes=" + contextBytes +
-                '}';
+        return "ScanTextConfig{"
+                + "detectionRuleUUIDs=" + detectionRuleUUIDs
+                + ", detectionRules=" + detectionRules
+                + ", contextBytes=" + contextBytes
+                + '}';
     }
 }

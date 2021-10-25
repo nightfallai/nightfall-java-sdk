@@ -15,7 +15,8 @@ public class WordList {
     private boolean isCaseSensitive;
 
     /**
-     * Creates a new WordList object
+     * Creates a new WordList object.
+     *
      * @param values a list of words
      * @param isCaseSensitive whether Nightfall needs to consider case sensitivity when searching for matches
      */
@@ -25,6 +26,7 @@ public class WordList {
     }
 
     /**
+     * Get the list of words.
      *
      * @return a list of words
      */
@@ -33,9 +35,10 @@ public class WordList {
     }
 
     /**
+     * Get whether the words in the list are case-sensitive.
      *
      * @return true if Nightfall needs to consider case sensitivity when searching for matches
-     * in the list, false otherwise
+     *      in the list, false otherwise
      */
     public boolean isCaseSensitive() {
         return isCaseSensitive;
