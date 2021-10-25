@@ -23,7 +23,7 @@ public class WebhookSignatureValidatorTest {
 
         WebhookSignatureValidator validator = new WebhookSignatureValidator(reallyLongTime);
         boolean result = validator.validate(reqBody, secret, expectedSignature, timestamp);
-        assertFalse(result);
+        assertTrue(result);
     }
 
     @Test
