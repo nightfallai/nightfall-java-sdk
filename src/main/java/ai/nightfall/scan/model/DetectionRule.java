@@ -9,6 +9,8 @@ import java.util.List;
  * triggered according to the provided <code>logicalOp</code>logicalOp; valid values are <code>ANY</code> (logical
  * <code>OR</code>, i.e. a finding is emitted only if any of the provided detectors match), or <code>ALL</code>
  * (logical <code>AND</code>, i.e. a finding is emitted only if all provided detectors match).
+ *
+ * <p>test violating because this line is too long ddffffffddffffffddffffffddffffffddffffffddffffffddffffffddffffffddffffff
  */
 public class DetectionRule {
 
