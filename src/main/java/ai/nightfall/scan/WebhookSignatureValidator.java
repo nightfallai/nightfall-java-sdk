@@ -32,6 +32,7 @@ public class WebhookSignatureValidator {
 
     /**
      * Instantiates the validator with the provided threshold.
+     * @param threshold the time threshold within which webhook requests should be considered valid.
      */
     public WebhookSignatureValidator(TemporalAmount threshold) {
         this.threshold = threshold;

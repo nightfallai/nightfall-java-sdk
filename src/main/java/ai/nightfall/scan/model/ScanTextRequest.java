@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+/**
+ * An object representing a request to scan inline plaintext with the Nightfall API.
+ */
 public class ScanTextRequest {
     @JsonProperty("payload")
     private List<String> payload;
@@ -12,7 +15,7 @@ public class ScanTextRequest {
     private ScanTextConfig config;
 
     /**
-     * Create a request to scan the provided `payload` against the provided scanning configuration `config`
+     * Create a request to scan the provided <code>payload</code> against the provided scanning configuration <code>config</code>
      * @param payload the content to scan
      * @param config the configuration to use to scan the content
      */
@@ -21,18 +24,34 @@ public class ScanTextRequest {
         this.config = config;
     }
 
+    /**
+     *
+     * @return the request data to scan
+     */
     public List<String> getPayload() {
         return payload;
     }
 
+    /**
+     *
+     * @param payload the request data to scan
+     */
     public void setPayload(List<String> payload) {
         this.payload = payload;
     }
 
+    /**
+     *
+     * @return the configuration to use to scan the <code>payload</code> data
+     */
     public ScanTextConfig getConfig() {
         return config;
     }
 
+    /**
+     *
+     * @param config the configuration to use to scan the <code>payload</code> data
+     */
     public void setConfig(ScanTextConfig config) {
         this.config = config;
     }
