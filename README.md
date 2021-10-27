@@ -2,8 +2,6 @@
 
 **Embed Nightfall scanning and detection functionality into Java applications**
 
-TODO
-
 <!-- TODO add badges [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 -->
 
@@ -15,10 +13,11 @@ the detectors in Nightfall's pre-built library, or you may programmatically defi
 
 Additionally, this library provides convenience features such as encapsulating the steps to chunk and upload files.
 
+To obtain an API Key, login to the [Nightfall dashboard](https://app.nightfall.ai/) and click the section
+titled "Manage API Keys".
+
 See our [developer documentation](https://docs.nightfall.ai/docs/entities-and-terms-to-know) for more details about
 integrating with the Nightfall API.
-
-TODO: maybe add a section about signing up for an API key? or maybe we just link to that specifically in the docs.
 
 ## Dependencies
 
@@ -94,7 +93,7 @@ extraction methods like OCR.
 Rather than implementing this functionality yourself, the Nightfall API allows you to upload the
 original files, and then we'll handle the heavy lifting.
 
-The file upload process is implemented as a series of several requests to upload the file in chunks. The library
+The file upload process is implemented as a series of requests to upload the file in chunks. The library
 provides a single method that wraps the steps required to upload your file. Please refer to the
 [API Reference](https://docs.nightfall.ai/reference) for more details.
 
