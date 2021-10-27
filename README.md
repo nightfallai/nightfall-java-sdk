@@ -57,7 +57,7 @@ contains *only* the compiled source files of this project, whereas the latter in
 
 ## Usage
 
-### Scanning Plaintext
+### Scanning Plain Text
 
 Nightfall provides pre-built detector types, covering data types ranging from PII to PHI to credentials. The following
 snippet shows an example of how to scan using pre-built detectors.
@@ -88,15 +88,21 @@ try (NightfallClient c = NightfallClient.Builder.defaultClient()) {
 
 ### Scanning Files
 
-In order to scan common file types like PDF's or office documents, traditional methods require cumbersome text
-extraction methods like OCR. Rather than implementing this yourself, the Nightfall API allows you to upload the
-original files, and we'll handle the heavy lifting.
+Scanning common file types like PDF's or office documents typically requires cumbersome text
+extraction methods like OCR.
 
-As files can be arbitrarily large, these scans are conducted asynchronously, and the scan results are delivered
-by webhook. For more information about setting up your webhook server, refer to
+Rather than implementing this functionality yourself, the Nightfall API allows you to upload the
+original files, and then we'll handle the heavy lifting.
+
+The file upload process is implemented as a series of several requests to upload the file in chunks. The library
+provides a single method that wraps the steps required to upload your file. Please refer to the
+[API Reference](https://docs.nightfall.ai/reference) for more details.
+
+The file is uploaded synchronously, but as files can be arbitrarily large, the scan itself is conducted asynchronously.
+The results from the scan are delivered by webhook; for more information about setting up a webhook server, refer to
 [the docs](https://docs.nightfall.ai/docs/creating-a-webhook-server).
 
-####  Sample Code
+#### Sample Code
 
 ```java
 // By default, the client reads the API key from the environment variable NIGHTFALL_API_KEY

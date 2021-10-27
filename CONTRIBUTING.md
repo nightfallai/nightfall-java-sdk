@@ -34,8 +34,8 @@ Note that even if you answer "no" to all questions, you may still be dealing wit
 unsure, just email us at `security@nightfall.ai`.
 
 ### Creating an Issue
-When filing an issue, make sure to answer these five questions:
-1. What version of Java are you using (go version)?
+When filing an issue, make sure to answer these questions:
+1. What version of Java are you using?
 2. What operating system and processor architecture are you using?
 3. How did you discover the issue?
 4. Is the issue reproducible? What are the steps to reproduce?
