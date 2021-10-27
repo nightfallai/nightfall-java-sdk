@@ -23,6 +23,7 @@ public class ScanPolicy {
 
     /**
      * Create a scan policy with the provided detection rules.
+     *
      * @param detectionRules a list of detection rules to use to scan content. maximum length 10.
      * @param webhookURL the URL that Nightfall will use to deliver a webhook containing scan results
      * @return the scan policy
@@ -33,6 +34,7 @@ public class ScanPolicy {
 
     /**
      * Create a scan policy with the provided detection rules.
+     *
      * @param detectionRuleUUIDs a list of detection rule UUIDs to use to scan content. maximum length 10.
      * @param webhookURL the URL that Nightfall will use to deliver a webhook containing scan results
      * @return the scan policy
@@ -43,6 +45,7 @@ public class ScanPolicy {
 
     /**
      * Create a scan policy with the provided detection rules and detection rule UUIDs.
+     *
      * @param webhookURL the URL that Nightfall will use to deliver a webhook containing scan results
      * @param detectionRules a list of detection rules to use to scan content. maximum length 10.
      * @param detectionRuleUUIDs a list of detection rule UUIDs to use to scan content. maximum length 10.
@@ -54,6 +57,7 @@ public class ScanPolicy {
     }
 
     /**
+     * Get the webhook URL.
      *
      * @return the webhook URL that Nightfall should deliver results to
      */
@@ -62,6 +66,7 @@ public class ScanPolicy {
     }
 
     /**
+     * Set the webhook URL.
      *
      * @param webhookURL the webhook URL that Nightfall should deliver results to
      */
@@ -70,6 +75,7 @@ public class ScanPolicy {
     }
 
     /**
+     * Get the list of detection rules.
      *
      * @return the list of detection rules to use to scan the files
      */
@@ -78,6 +84,7 @@ public class ScanPolicy {
     }
 
     /**
+     * Set the detection rules.
      *
      * @param detectionRules a list of detection rules to scan against
      */
@@ -86,6 +93,7 @@ public class ScanPolicy {
     }
 
     /**
+     * Get the detection rule UUIDs.
      *
      * @return the list of detection rule UUIDs to scan against
      */
@@ -94,6 +102,7 @@ public class ScanPolicy {
     }
 
     /**
+     * Set the detection rule UUIDs.
      *
      * @param detectionRuleUUIDs the list of detection rule UUIDs to scan against
      */

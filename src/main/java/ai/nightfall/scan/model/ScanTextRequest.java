@@ -15,7 +15,9 @@ public class ScanTextRequest {
     private ScanTextConfig config;
 
     /**
-     * Create a request to scan the provided <code>payload</code> against the provided scanning configuration <code>config</code>
+     * Create a request to scan the provided <code>payload</code> against the provided scanning
+     * configuration <code>config</code>.
+     *
      * @param payload the content to scan
      * @param config the configuration to use to scan the content
      */
@@ -25,6 +27,7 @@ public class ScanTextRequest {
     }
 
     /**
+     * Get the request payload.
      *
      * @return the request data to scan
      */
@@ -33,6 +36,7 @@ public class ScanTextRequest {
     }
 
     /**
+     * Set the request payload.
      *
      * @param payload the request data to scan
      */
@@ -41,6 +45,7 @@ public class ScanTextRequest {
     }
 
     /**
+     * Get the request scan configuration.
      *
      * @return the configuration to use to scan the <code>payload</code> data
      */
@@ -49,6 +54,7 @@ public class ScanTextRequest {
     }
 
     /**
+     * Set the request scan configuration.
      *
      * @param config the configuration to use to scan the <code>payload</code> data
      */

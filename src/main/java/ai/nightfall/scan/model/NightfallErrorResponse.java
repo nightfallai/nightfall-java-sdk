@@ -23,6 +23,7 @@ public class NightfallErrorResponse {
     private Map<String, String> additionalData;
 
     /**
+     * Get the error code.
      *
      * @return the error code returned by the API
      */
@@ -31,6 +32,7 @@ public class NightfallErrorResponse {
     }
 
     /**
+     * Get the error message.
      *
      * @return the error message returned by the API
      */
@@ -39,6 +41,7 @@ public class NightfallErrorResponse {
     }
 
     /**
+     * Get the error description.
      *
      * @return additional details describing the circumstance surrounding the error
      */
@@ -47,6 +50,7 @@ public class NightfallErrorResponse {
     }
 
     /**
+     * Get supplemental error data.
      *
      * @return supplemental data that may be useful in debugging the error message
      */
@@ -56,11 +60,11 @@ public class NightfallErrorResponse {
 
     @Override
     public String toString() {
-        return "Error{" +
-                "code=" + code +
-                ", message='" + message + '\'' +
-                ", description='" + description + '\'' +
-                ", additionalData=" + additionalData +
-                '}';
+        return "Error{"
+                + "code=" + code
+                + ", message='" + message + '\''
+                + ", description='" + description + '\''
+                + ", additionalData=" + additionalData
+                + '}';
     }
 }

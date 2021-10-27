@@ -16,6 +16,7 @@ public class ScanFileResponse {
     private String message;
 
     /**
+     * Get the file ID.
      *
      * @return the ID of the file whose scan was triggered
      */
@@ -24,6 +25,7 @@ public class ScanFileResponse {
     }
 
     /**
+     * Get the status message.
      *
      * @return a status message describing the file scan
      */

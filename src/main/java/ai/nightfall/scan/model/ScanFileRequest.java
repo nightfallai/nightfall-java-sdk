@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
 
 /**
- * A container for a request to scan a file that was uploaded via the Nightfall API. Exactly one of <code>policyUUID</code>
- * or <code>policy</code> should be provided.
+ * A container for a request to scan a file that was uploaded via the Nightfall API. Exactly one of
+ * <code>policyUUID</code> or <code>policy</code> should be provided.
  */
 public class ScanFileRequest {
 
@@ -21,6 +21,7 @@ public class ScanFileRequest {
 
     /**
      * Create a new request to scan a file.
+     *
      * @param policy the policy to use to scan the file.
      * @param requestMetadata arbitrary metadata to pass along with the request; maximum length 10 KB.
      */
@@ -31,6 +32,7 @@ public class ScanFileRequest {
 
     /**
      * Create a new request to scan a file.
+     *
      * @param policyUUID the UUID of an existing policy to use to scan the file.
      * @param requestMetadata arbitrary metadata to pass along with the request; maximum length 10 KB.
      */
@@ -40,6 +42,7 @@ public class ScanFileRequest {
     }
 
     /**
+     * Get the policy UUID.
      *
      * @return the UUID of an existing policy to use to scan a file
      */
@@ -48,6 +51,7 @@ public class ScanFileRequest {
     }
 
     /**
+     * Get the policy.
      *
      * @return the policy to use to scan the file
      */
@@ -56,6 +60,7 @@ public class ScanFileRequest {
     }
 
     /**
+     * Get the request metadata.
      *
      * @return the request metadata.
      */
@@ -64,6 +69,7 @@ public class ScanFileRequest {
     }
 
     /**
+     * Set the request metadata.
      *
      * @param requestMetadata arbitrary data to be passed along with the request, maximum length 10 KB.
      */

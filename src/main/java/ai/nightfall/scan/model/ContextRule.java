@@ -19,7 +19,8 @@ public class ContextRule {
     private ConfidenceAdjustment confidenceAdjustment;
 
     /**
-     * Create a new Context Rule
+     * Create a new Context Rule.
+     *
      * @param regex the regular expression configuration
      * @param proximity the proximity in which to evaluate the regular expression
      * @param confidenceAdjustment describes how to adjust the confidence of a finding if the regular expression matches
@@ -31,6 +32,8 @@ public class ContextRule {
     }
 
     /**
+     * Return the regular expression.
+     *
      * @return the regular expression
      */
     public Regex getRegex() {
@@ -38,6 +41,8 @@ public class ContextRule {
     }
 
     /**
+     * Return the proximity.
+     *
      * @return the proximity
      */
     public Proximity getProximity() {
@@ -45,6 +50,8 @@ public class ContextRule {
     }
 
     /**
+     * Return the confidence adjustment.
+     *
      * @return the confidence adjustment
      */
     public ConfidenceAdjustment getConfidenceAdjustment() {

@@ -6,6 +6,7 @@ package ai.nightfall.scan.model;
 public class BaseNightfallException extends RuntimeException {
     /**
      * Create a new exception.
+     *
      * @param message the error message
      */
     public BaseNightfallException(String message) {

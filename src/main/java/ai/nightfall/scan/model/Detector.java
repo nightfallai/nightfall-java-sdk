@@ -42,7 +42,8 @@ public class Detector {
     private List<ExclusionRule> exclusionRules;
 
     /**
-     * Create an instance of a detector based on a pre-built Nightfall detector
+     * Create an instance of a detector based on a pre-built Nightfall detector.
+     *
      * @param nightfallDetector the name of a pre-built Nightfall detector
      */
     public Detector(String nightfallDetector) {
@@ -51,7 +52,8 @@ public class Detector {
     }
 
     /**
-     * Create an instance of a detector based on a regular expression
+     * Create an instance of a detector based on a regular expression.
+     *
      * @param regex the regular expression configuration
      */
     public Detector(Regex regex) {
@@ -60,7 +62,8 @@ public class Detector {
     }
 
     /**
-     * Create an instance of a detector based on a word list
+     * Create an instance of a detector based on a word list.
+     *
      * @param wordList the word list configuration
      */
     public Detector(WordList wordList) {
@@ -69,7 +72,8 @@ public class Detector {
     }
 
     /**
-     * Create an instance of a detector by using an existing detector's UUID
+     * Create an instance of a detector by using an existing detector's UUID.
+     *
      * @param detectorUUID an existing detector's UUID
      */
     public Detector(UUID detectorUUID) {
@@ -79,6 +83,7 @@ public class Detector {
 
 
     /**
+     * Return the minimum confidence.
      *
      * @return the minimum confidence threshold required in order for a finding to be triggered
      */
@@ -87,15 +92,17 @@ public class Detector {
     }
 
     /**
+     * Set the minimum confidence.
      *
-     * @param minConfidence the minimum confidence threshold. Valid values: <code>VERY_UNLIKELY</code>, <code>UNLIKELY</code>,
-     *                      <code>POSSIBLE</code>, <code>LIKELY</code>, <code>VERY_LIKELY</code>.
+     * @param minConfidence the minimum confidence threshold. Valid values: <code>VERY_UNLIKELY</code>,
+     *                      <code>UNLIKELY</code>, <code>POSSIBLE</code>, <code>LIKELY</code>, <code>VERY_LIKELY</code>.
      */
     public void setMinConfidence(String minConfidence) {
         this.minConfidence = minConfidence;
     }
 
     /**
+     * Get the minimum number of findings.
      *
      * @return the minimum number of occurrences of the detector required to trigger a finding match
      */
@@ -104,6 +111,7 @@ public class Detector {
     }
 
     /**
+     * Set the minimum number of findings.
      *
      * @param minNumFindings the minimum number of occurrences of the detector required to trigger a finding match
      */
@@ -112,6 +120,7 @@ public class Detector {
     }
 
     /**
+     * Get the detector UUID.
      *
      * @return a UUID that represents a pre-built detector
      */
@@ -120,6 +129,7 @@ public class Detector {
     }
 
     /**
+     * Get the display name.
      *
      * @return a display name for this detector
      */
@@ -128,6 +138,7 @@ public class Detector {
     }
 
     /**
+     * Set the display name.
      *
      * @param displayName a display name for this detector
      */
@@ -136,41 +147,47 @@ public class Detector {
     }
 
     /**
+     * Get the detector type.
      *
-     * @return the type of this detector. Valid values are <code>NIGHTFALL_DETECTOR</code>, <code>REGEX</code>, and <code>WORD_LIST</code>.
+     * @return the type of this detector. Valid values are <code>NIGHTFALL_DETECTOR</code>, <code>REGEX</code>,
+     *      and <code>WORD_LIST</code>.
      */
     public String getDetectorType() {
         return detectorType;
     }
 
     /**
+     * Get the nightfall detector.
      *
      * @return the pre-built Nightfall Detector to use. This field is only used if the Detector was constructed
-     * with a Nightfall Detector argument.
+     *      with a Nightfall Detector argument.
      */
     public String getNightfallDetector() {
         return nightfallDetector;
     }
 
     /**
+     * Get the regex.
      *
      * @return the regular expression representing this detector. This field is only used if the Detector was
-     * constructed with a regex argument.
+     *      constructed with a regex argument.
      */
     public Regex getRegex() {
         return regex;
     }
 
     /**
+     * Get the word list.
      *
      * @return the word list representing this detector. This field is only used if the Detector was constructed
-     * with a word list argument.
+     *      with a word list argument.
      */
     public WordList getWordList() {
         return wordList;
     }
 
     /**
+     * Get the context rules.
      *
      * @return the context rules that will be used to customize the behavior of this detector
      */
@@ -179,6 +196,7 @@ public class Detector {
     }
 
     /**
+     * Set the context rules.
      *
      * @param contextRules the context rules to use to customize the behavior of this detector
      */
@@ -187,6 +205,7 @@ public class Detector {
     }
 
     /**
+     * Get the exclusion rules.
      *
      * @return the exclusion rules that will be used to customize the behavior of this detector
      */
@@ -195,6 +214,7 @@ public class Detector {
     }
 
     /**
+     * Set the exclusion rules.
      *
      * @param exclusionRules the exclusion rules to use to customize the behavior of this detector
      */
@@ -204,17 +224,17 @@ public class Detector {
 
     @Override
     public String toString() {
-        return "Detector{" +
-                "minConfidence='" + minConfidence + '\'' +
-                ", minNumFindings=" + minNumFindings +
-                ", detectorUUID=" + detectorUUID +
-                ", displayName='" + displayName + '\'' +
-                ", detectorType='" + detectorType + '\'' +
-                ", nightfallDetector='" + nightfallDetector + '\'' +
-                ", regex=" + regex +
-                ", wordList=" + wordList +
-                ", contextRules=" + contextRules +
-                ", exclusionRules=" + exclusionRules +
-                '}';
+        return "Detector{"
+                + "minConfidence='" + minConfidence + '\''
+                + ", minNumFindings=" + minNumFindings
+                + ", detectorUUID=" + detectorUUID
+                + ", displayName='" + displayName + '\''
+                + ", detectorType='" + detectorType + '\''
+                + ", nightfallDetector='" + nightfallDetector + '\''
+                + ", regex=" + regex
+                + ", wordList=" + wordList
+                + ", contextRules=" + contextRules
+                + ", exclusionRules=" + exclusionRules
+                + '}';
     }
 }
