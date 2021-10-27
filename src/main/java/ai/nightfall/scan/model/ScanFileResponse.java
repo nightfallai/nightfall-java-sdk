@@ -32,4 +32,12 @@ public class ScanFileResponse {
     public String getMessage() {
         return message;
     }
+
+    @Override
+    public String toString() {
+        return "ScanFileResponse{"
+                + "id=" + id
+                + ", message='" + message + '\''
+                + '}';
+    }
 }
