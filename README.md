@@ -58,7 +58,6 @@ Alternatively, if you would like to build the project yourself:
 3. The `build` directory should contain two artifacts: `api-$VERSION.jar` and `api-$VERSION-shaded.jar`. The former
 contains *only* the compiled source files of this project, whereas the latter includes the compiled dependencies. 
 4. Take whichever jar you prefer from the `build/` directory and add it to your project's classpath.
-> Steps for building the project
 
 ## Usage
 
