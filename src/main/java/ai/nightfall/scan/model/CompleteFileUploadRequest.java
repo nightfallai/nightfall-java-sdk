@@ -11,6 +11,7 @@ public class CompleteFileUploadRequest {
 
     /**
      * Constructs a new request to complete a file upload.
+     *
      * @param fileUploadID the file ID
      */
     public CompleteFileUploadRequest(UUID fileUploadID) {
@@ -18,6 +19,7 @@ public class CompleteFileUploadRequest {
     }
 
     /**
+     * Returns the file ID.
      *
      * @return the file ID
      */
@@ -26,6 +28,7 @@ public class CompleteFileUploadRequest {
     }
 
     /**
+     * Sets the file ID.
      *
      * @param fileUploadID the file ID
      */

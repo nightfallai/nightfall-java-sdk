@@ -22,6 +22,7 @@ public class DetectionRule {
     private String name;
 
     /**
+     * Get the list of detectors.
      *
      * @return the set of detectors
      */
@@ -30,6 +31,7 @@ public class DetectionRule {
     }
 
     /**
+     * Set the detectors.
      *
      * @param detectors a set of detectors
      */
@@ -38,6 +40,7 @@ public class DetectionRule {
     }
 
     /**
+     * Get the logical op.
      *
      * @return the logical op
      */
@@ -46,6 +49,7 @@ public class DetectionRule {
     }
 
     /**
+     * Set the logical op.
      *
      * @param logicalOp a logical op; valid values <code>ANY</code> or <code>ALL</code>
      */
@@ -54,6 +58,7 @@ public class DetectionRule {
     }
 
     /**
+     * Get the name of the detection rule.
      *
      * @return the name of the detection rule
      */
@@ -62,6 +67,7 @@ public class DetectionRule {
     }
 
     /**
+     * Set the detection rule name.
      *
      * @param name a name for the detection rule
      */
@@ -71,10 +77,10 @@ public class DetectionRule {
 
     @Override
     public String toString() {
-        return "DetectionRule{" +
-                "detectors=" + detectors +
-                ", logicalOp='" + logicalOp + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return "DetectionRule{"
+                + "detectors=" + detectors
+                + ", logicalOp='" + logicalOp + '\''
+                + ", name='" + name + '\''
+                + '}';
     }
 }

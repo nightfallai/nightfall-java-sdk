@@ -2,6 +2,7 @@ package ai.nightfall.scan;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -13,7 +14,8 @@ import java.time.temporal.TemporalAmount;
 
 /**
  * A class that implements Nightfall webhook signature validation. This class can be used in a request middleware
- * to validate the authenticity of a request before processing it. Validation is implemented with a SHA-256 HMAC signature.
+ * to validate the authenticity of a request before processing it. Validation is implemented with an SHA-256
+ * HMAC signature.
  */
 public class WebhookSignatureValidator {
 
@@ -32,6 +34,7 @@ public class WebhookSignatureValidator {
 
     /**
      * Instantiates the validator with the provided threshold.
+     *
      * @param threshold the time threshold within which webhook requests should be considered valid.
      */
     public WebhookSignatureValidator(TemporalAmount threshold) {
@@ -41,19 +44,22 @@ public class WebhookSignatureValidator {
     /**
      * Validates that the provided request payload is an authentic request that originated from Nightfall. If this
      * method returns false, request handlers shall not process the provided body any further.
+     *
      * @param requestBody the entire, raw request payload, encoded in UTF-8.
      * @param signingSecret the signing secret used as the key for HMAC.
      * @param requestSignature the signature provided by Nightfall to compare against the locally-computed value.
-     * @param requestTimestamp the Unix timestamp of when this request was sent, i.e. the number of seconds since the Unix epoch.
-     * @return true if the signature is valid and the request occurred within the allowed time threshold, otherwise false.
+     * @param requestTime the Unix timestamp of when this request was sent, i.e. the number of seconds
+     *                         since the Unix epoch.
+     * @return true if the signature is valid and the request occurred within the allowed time threshold,
+     *      otherwise false.
      */
-    public boolean validate(String requestBody, byte[] signingSecret, String requestSignature, String requestTimestamp) {
-        if (requestBody == null || signingSecret == null || requestSignature == null || requestTimestamp == null) {
+    public boolean validate(String requestBody, byte[] signingSecret, String requestSignature, String requestTime) {
+        if (requestBody == null || signingSecret == null || requestSignature == null || requestTime == null) {
             return false;
         }
 
         Instant now = Instant.now();
-        Instant reqTime = Instant.parse(requestTimestamp);
+        Instant reqTime = Instant.parse(requestTime);
         if (now.minus(this.threshold).isAfter(reqTime)) {
             return false;
         }
@@ -71,7 +77,7 @@ public class WebhookSignatureValidator {
             return false;
         }
 
-        String hashPayload = requestTimestamp + ":" + requestBody;
+        String hashPayload = requestTime + ":" + requestBody;
         byte[] hashed = hmac.doFinal(hashPayload.getBytes(StandardCharsets.UTF_8));
         String hexHash = String.format("%032x", new BigInteger(hashed));
         return hexHash.equals(requestSignature);

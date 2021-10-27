@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
 
 /**
- * An object representing a file upload
+ * An object representing a file upload.
  */
 public class FileUpload {
     @JsonProperty("id")
@@ -21,6 +21,7 @@ public class FileUpload {
     private String mimeType;
 
     /**
+     * Get the file ID.
      *
      * @return a unique ID representing this file
      */
@@ -29,6 +30,7 @@ public class FileUpload {
     }
 
     /**
+     * Get the file size.
      *
      * @return the size of the file in bytes
      */
@@ -37,6 +39,7 @@ public class FileUpload {
     }
 
     /**
+     * Get the chunk size.
      *
      * @return the number of bytes to use when uploading the file chunk-by-chunk
      */
@@ -45,6 +48,7 @@ public class FileUpload {
     }
 
     /**
+     * Get the mime type.
      *
      * @return the RFC-2045 media type represented by this file
      */

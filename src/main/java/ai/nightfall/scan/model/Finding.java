@@ -34,6 +34,7 @@ public class Finding {
     private List<String> matchedDetectionRules;
 
     /**
+     * Get the finding.
      *
      * @return the data that triggered a detector match
      */
@@ -42,6 +43,7 @@ public class Finding {
     }
 
     /**
+     * Get the preceding context.
      *
      * @return the data that immediately preceded the finding
      */
@@ -50,6 +52,7 @@ public class Finding {
     }
 
     /**
+     * Get the trailing context.
      *
      * @return the data that immediately succeeded the finding
      */
@@ -58,6 +61,7 @@ public class Finding {
     }
 
     /**
+     * Get the detector.
      *
      * @return the detector that triggered the match
      */
@@ -66,6 +70,7 @@ public class Finding {
     }
 
     /**
+     * Get the finding confidence.
      *
      * @return the confidence that the data contained in <code>finding</code> is an instance of the matched detector
      */
@@ -74,6 +79,7 @@ public class Finding {
     }
 
     /**
+     * Get the location of the finding.
      *
      * @return the location where the data was in the original input file
      */
@@ -82,6 +88,7 @@ public class Finding {
     }
 
     /**
+     * Get the list of matched detection rule UUIDs.
      *
      * @return the list of detection rule UUIDs that contained a detector that triggered a match
      */
@@ -90,6 +97,7 @@ public class Finding {
     }
 
     /**
+     * Get the list of matched detection rules.
      *
      * @return the list of inline detection rules that contained a detector that triggered a match
      */
@@ -99,15 +107,15 @@ public class Finding {
 
     @Override
     public String toString() {
-        return "Finding{" +
-                "finding='" + finding + '\'' +
-                ", beforeContext='" + beforeContext + '\'' +
-                ", afterContext='" + afterContext + '\'' +
-                ", detector=" + detector +
-                ", confidence='" + confidence + '\'' +
-                ", location=" + location +
-                ", matchedDetectionRuleUUIDs=" + matchedDetectionRuleUUIDs +
-                ", matchedDetectionRules=" + matchedDetectionRules +
-                '}';
+        return "Finding{"
+                + "finding='" + finding + '\''
+                + ", beforeContext='" + beforeContext + '\''
+                + ", afterContext='" + afterContext + '\''
+                + ", detector=" + detector
+                + ", confidence='" + confidence + '\''
+                + ", location=" + location
+                + ", matchedDetectionRuleUUIDs=" + matchedDetectionRuleUUIDs
+                + ", matchedDetectionRules=" + matchedDetectionRules
+                + '}';
     }
 }
