@@ -14,6 +14,7 @@ public class Location {
     private Range codepointRange;
 
     /**
+     * Get the finding's byte range.
      *
      * @return the byte range in which a finding was detected
      */
@@ -22,9 +23,10 @@ public class Location {
     }
 
     /**
+     * Get the finding's codepoint range.
      *
      * @return the codepoint range in which a finding was detected. This differs from byte range since a codepoint
-     * may contain multiple bytes.
+     *      may contain multiple bytes.
      */
     public Range getCodepointRange() {
         return codepointRange;
@@ -32,10 +34,10 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Location{" +
-                "byteRange=" + byteRange +
-                ", codepointRange=" + codepointRange +
-                '}';
+        return "Location{"
+                + "byteRange=" + byteRange
+                + ", codepointRange=" + codepointRange
+                + '}';
     }
 
     /**
@@ -49,6 +51,7 @@ public class Location {
         private long end;
 
         /**
+         * Get the beginning of the range.
          *
          * @return the beginning of the range
          */
@@ -57,6 +60,7 @@ public class Location {
         }
 
         /**
+         * Get the end of the range.
          *
          * @return the end of the range
          */
@@ -66,10 +70,10 @@ public class Location {
 
         @Override
         public String toString() {
-            return "Range{" +
-                    "start=" + start +
-                    ", end=" + end +
-                    '}';
+            return "Range{"
+                    + "start=" + start
+                    + ", end=" + end
+                    + '}';
         }
     }
 }

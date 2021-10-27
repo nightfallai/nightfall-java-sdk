@@ -14,7 +14,8 @@ public class Regex {
     private boolean isCaseSensitive;
 
     /**
-     * Creates a new Regex object
+     * Creates a new Regex object.
+     *
      * @param pattern the regular expression to use as part of a detector
      * @param isCaseSensitive whether to consider case sensitivity when evaluating matches
      */
@@ -24,6 +25,7 @@ public class Regex {
     }
 
     /**
+     * Get the regex pattern.
      *
      * @return the regular expression to use as part of a detector
      */
@@ -32,9 +34,10 @@ public class Regex {
     }
 
     /**
+     * Get whether the regex is case-sensitive.
      *
      * @return true if the regular expression needs to consider case sensitivity when searching for
-     * matches, false otherwise
+     *     matches, false otherwise
      */
     public boolean isCaseSensitive() {
         return isCaseSensitive;

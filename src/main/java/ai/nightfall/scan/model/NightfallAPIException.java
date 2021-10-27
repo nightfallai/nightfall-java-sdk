@@ -7,17 +7,18 @@ package ai.nightfall.scan.model;
 public class NightfallAPIException extends BaseNightfallException {
 
     /**
-     * the error returned by the Nightfall API
+     * The error returned by the Nightfall API.
      */
     private NightfallErrorResponse error;
 
     /**
-     * the HTTP status code returned by the Nightfall API
+     * The HTTP status code returned by the Nightfall API.
      */
     private int httpStatusCode;
 
     /**
      * Create a new instance of the exception.
+     *
      * @param message an error message
      */
     public NightfallAPIException(String message) {
@@ -26,6 +27,7 @@ public class NightfallAPIException extends BaseNightfallException {
 
     /**
      * Create a new instance of the exception.
+     *
      * @param message an error message
      * @param error the standardized error object returned by the Nightfall API
      * @param httpStatusCode the HTTP status code
@@ -38,13 +40,14 @@ public class NightfallAPIException extends BaseNightfallException {
 
     @Override
     public String toString() {
-        return "NightfallAPIException{" +
-                "error=" + error +
-                ", httpStatusCode=" + httpStatusCode +
-                '}';
+        return "NightfallAPIException{"
+                + "error=" + error
+                + ", httpStatusCode=" + httpStatusCode
+                + '}';
     }
 
     /**
+     * Get the error object returned by Nightfall.
      *
      * @return the standard error object that was returned by the Nightfall API
      */

@@ -14,6 +14,7 @@ public class Proximity {
     private int windowAfter;
 
     /**
+     * Construct a new Proximity.
      *
      * @param windowBefore The number of leading characters to consider as context
      * @param windowAfter The number of trailing characters to consider as context
@@ -24,6 +25,7 @@ public class Proximity {
     }
 
     /**
+     * Get the number of leading bytes.
      *
      * @return the number of bytes to consider leading up to a candidate finding
      */
@@ -32,6 +34,7 @@ public class Proximity {
     }
 
     /**
+     * Get the number of trailing bytes.
      *
      * @return the number of bytes to consider trailing a candidate finding
      */
