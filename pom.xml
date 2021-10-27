@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ai.nightfall.api</groupId>
-    <artifactId>dlp-scan</artifactId>
-    <version>0.1</version>
+    <groupId>ai.nightfall</groupId>
+    <artifactId>scan-api</artifactId>
+    <version>1.0.0</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>The Nightfall Scanner provides Java bindings for our developer platform, which allows clients
