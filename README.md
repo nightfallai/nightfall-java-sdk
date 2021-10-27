@@ -9,7 +9,11 @@ TODO
 
 ##  Features
 
-TODO
+This SDK provides Java bindings for the Nightfall API. It allows you to add functionality to your applications to
+scan plain text and files in order to detect different categories of information. You can leverage any of
+the detectors in Nightfall's pre-built library, or you may programmatically define your own custom detectors. 
+
+Additionally, this library provides convenience features such as encapsulating the steps to chunk and upload files.
 
 See our [developer documentation](https://docs.nightfall.ai/docs/entities-and-terms-to-know) for more details about
 integrating with the Nightfall API.
@@ -20,15 +24,7 @@ TODO: maybe add a section about signing up for an API key? or maybe we just link
 
 The Nightfall Java SDK requires Java 8 or later.
 
-The SDK also requires the following libraries:
-
-| group                         | artifact           | version    |
-| ----------------------------- | ------------------ | ---------- |
-| com.fasterxml.jackson.core	| jackson-databind	 |  2.13.0    |
-| com.fasterxml.jackson.core	| jackson-annotation |  2.13.0    |
-| com.squareup.okhttp3			| okhttp             |  4.9.2     |
-
-For a full list of dependencies please consult the `pom.xml` file
+For a full list of external dependencies please consult `pom.xml`.
 
 ## Installation
 
