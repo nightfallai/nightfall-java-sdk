@@ -136,6 +136,8 @@ Contributions are welcome! Open a pull request to fix a bug, or open an issue to
 or change. Please adhere to the linting criteria defined in `checkstyle.xml`, and be sure to add unit
 tests for any new functionality you add.
 
+Refer to `CONTRIBUTING.md` for the full details.
+
 ## License
 
 This code is licensed under the terms of the MIT License. See [here](https://opensource.org/licenses/MIT)
