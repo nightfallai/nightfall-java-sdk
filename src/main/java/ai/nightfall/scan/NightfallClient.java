@@ -120,7 +120,7 @@ public class NightfallClient implements Closeable {
      * @return an acknowledgment that the asynchronous scan has been initiated.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
-     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because read/write timeout is exceeded
      */
     public ScanFileResponse scanFile(ScanFileRequest request, InputStream content, long contentSizeBytes) {
         return scanFile(request, content, contentSizeBytes, null);
@@ -147,7 +147,7 @@ public class NightfallClient implements Closeable {
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
      * @throws NightfallRequestTimeoutException thrown if execution time exceeds the provided <code>timeout</code>,
-     *      or if the request is aborted because the timeout is exceeded
+     *      or if an HTTP request is terminated by the client for exceeding read/write timeouts.
      */
     public ScanFileResponse scanFile(
             ScanFileRequest request, InputStream content, long contentSizeBytes, Duration timeout) {
@@ -169,7 +169,6 @@ public class NightfallClient implements Closeable {
         InitializeFileUploadRequest initRequest = new InitializeFileUploadRequest(contentSizeBytes);
         FileUpload upload = this.initializeFileUpload(initRequest);
 
-        System.out.println("upload start time: " + Instant.now());
         AtomicReference<BaseNightfallException> uploadException = new AtomicReference<>();
         boolean uploadSuccess = doChunkedUpload(upload, content, deadline, uploadException);
         if (!uploadSuccess) {
@@ -179,12 +178,10 @@ public class NightfallClient implements Closeable {
             }
             throw new NightfallClientException("internal error: failed to upload all chunks of file");
         }
-        System.out.println("upload end time: " + Instant.now());
 
         CompleteFileUploadRequest completeReq = new CompleteFileUploadRequest(upload.getFileID());
         upload = this.completeFileUpload(completeReq);
 
-        System.out.println("completion end time: " + Instant.now());
         return this.scanUploadedFile(request, upload.getFileID());
     }
 
@@ -198,9 +195,7 @@ public class NightfallClient implements Closeable {
         AtomicBoolean allChunksSucceed = new AtomicBoolean(true);
         for (int offset = 0; offset < upload.getFileSizeBytes(); offset += upload.getChunkSize()) {
             semaphore.acquireUninterruptibly();
-            int index = offset / (int) upload.getChunkSize();
-            System.out.println("offset index: " + index);
-            checkDeadline(deadline);
+            checkFileUploadDeadline(deadline);
 
             if (!allChunksSucceed.get()) {
                 return false;
@@ -223,14 +218,11 @@ public class NightfallClient implements Closeable {
 
             this.executor.execute(() -> {
                 try {
-                    System.out.println("about to upload index " + index);
                     this.uploadFileChunk(chunkReq);
                 } catch (BaseNightfallException e) {
-                    System.out.println("nightfall exception for index: " + index + ", error: " + e.getMessage());
                     allChunksSucceed.set(false);
                     uploadException.set(e);
                 } catch (Throwable t) {
-                    System.out.println("throwable for index: " + index + ", error: " + t.getMessage());
                     allChunksSucceed.set(false);
                 } finally {
                     semaphore.release();
@@ -246,14 +238,14 @@ public class NightfallClient implements Closeable {
                 if (success) {
                     return allChunksSucceed.get();
                 }
-                checkDeadline(deadline);
+                checkFileUploadDeadline(deadline);
             } catch (InterruptedException e) {
                 throw new NightfallClientException("interrupted while waiting for upload to complete");
             }
         }
     }
 
-    private void checkDeadline(Instant deadline) {
+    private void checkFileUploadDeadline(Instant deadline) {
         if (deadline != null && Instant.now().isAfter(deadline)) {
             throw new NightfallRequestTimeoutException("timed out while uploading file");
         }
@@ -267,7 +259,7 @@ public class NightfallClient implements Closeable {
      * @return an object representing the file upload.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
-     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because read/write timeout is exceeded
      */
     private FileUpload initializeFileUpload(InitializeFileUploadRequest request) {
         byte[] jsonBody;
@@ -291,7 +283,7 @@ public class NightfallClient implements Closeable {
      * @return true if the chunk was uploaded
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
-     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because read/write timeout is exceeded
      */
     private boolean uploadFileChunk(UploadFileChunkRequest request) {
         Headers headers = Headers.of("X-Upload-Offset", Long.toString(request.getFileOffset()));
@@ -309,7 +301,7 @@ public class NightfallClient implements Closeable {
      * @return an object representing the file upload.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
-     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because read/write timeout is exceeded
      */
     private FileUpload completeFileUpload(CompleteFileUploadRequest request) {
         String path = "/v3/upload/" + request.getFileUploadID().toString() + "/finish";
@@ -327,7 +319,7 @@ public class NightfallClient implements Closeable {
      * @return an acknowledgment that the asynchronous scan has been initiated.
      * @throws NightfallAPIException thrown if a non-2xx status code is returned by the API.
      * @throws NightfallClientException thrown if a I/O error occurs while processing the request
-     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because read/write timeout is exceeded
      */
     private ScanFileResponse scanUploadedFile(ScanFileRequest request, UUID fileID) {
         String path = "/v3/upload/" + fileID.toString() + "/scan";
@@ -355,7 +347,7 @@ public class NightfallClient implements Closeable {
      * @return an instance of the <code>responseClass</code>
      * @throws NightfallClientException thrown if an unexpected error occurs while processing the request
      * @throws NightfallAPIException thrown if the API returns a 4xx or 5xx error code
-     * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
+     * @throws NightfallRequestTimeoutException thrown if the request is aborted because read/write timeout is exceeded
      */
     private <E> E issueRequest(
             String path, String method, MediaType mediaType, byte[] body, Headers headers, Class<E> responseClass) {
@@ -409,7 +401,7 @@ public class NightfallClient implements Closeable {
                 // If OkHTTP times out, allow retries
                 if (e.getMessage().equals("timeout")) {
                     if (attempt >= this.retryCount - 1) {
-                        throw new NightfallRequestTimeoutException("timed out uploading file");
+                        throw new NightfallRequestTimeoutException("request timed out");
                     }
 
                     try {
