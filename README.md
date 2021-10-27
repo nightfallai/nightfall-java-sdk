@@ -42,7 +42,7 @@ Add the following to your project's `pom.xml`:
 Add the following to your project's `dependencies`:
 
 ```
-implementation group: 'ai.nightfall.api', name: 'scan', version: '1.0'
+implementation group: 'ai.nightfall', name: 'scan-api', version: '1.0.0'
 ```
 
 ### Building Locally
