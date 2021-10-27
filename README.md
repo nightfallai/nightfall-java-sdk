@@ -32,9 +32,9 @@ Add the following to your project's `pom.xml`:
 
 ``` xml
 <dependency>
-    <groupId>ai.nightfall.api</groupId>
-    <artifactId>scan</artifactId>
-    <version>1.0</version>
+    <groupId>ai.nightfall</groupId>
+    <artifactId>scan-api</artifactId>
+    <version>1.0.0</version>
 </dependency>
 ```
 
