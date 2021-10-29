@@ -22,6 +22,30 @@ public class DetectionRule {
     private String name;
 
     /**
+     * Create a detection rule with the provided detectors and logicalOp.
+     *
+     * @param detectors a list of detectors
+     * @param logicalOp a logical op: ANY or ALL
+     */
+    public DetectionRule(List<Detector> detectors, String logicalOp) {
+        this.detectors = detectors;
+        this.logicalOp = logicalOp;
+    }
+
+    /**
+     * Create a detection rule with the provided detectors and logicalOp.
+     *
+     * @param detectors a list of detectors
+     * @param logicalOp a logical op: ANY or ALL
+     * @param name a name for the detection rule
+     */
+    public DetectionRule(List<Detector> detectors, String logicalOp, String name) {
+        this.detectors = detectors;
+        this.logicalOp = logicalOp;
+        this.name = name;
+    }
+
+    /**
      * Get the list of detectors.
      *
      * @return the set of detectors

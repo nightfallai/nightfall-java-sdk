@@ -13,6 +13,9 @@ public class ScanTextResponse {
     @JsonProperty("findings")
     private List<List<Finding>> findings;
 
+    @JsonProperty("redactedPayload")
+    private List<String> redactedPayload;
+
     /**
      * Get the findings.
      *
@@ -20,5 +23,23 @@ public class ScanTextResponse {
      */
     public List<List<Finding>> getFindings() {
         return findings;
+    }
+
+    /**
+     * Return the original request content with the configured redactions applied. If redaction was not
+     * applied for a given input string, the string at a given index in the array will be empty.
+     *
+     * @return the original content with the configured redactions applied
+     */
+    public List<String> getRedactedPayload() {
+        return redactedPayload;
+    }
+
+    @Override
+    public String toString() {
+        return "ScanTextResponse{"
+                + "findings=" + findings
+                + ", redactedPayload=" + redactedPayload
+                + '}';
     }
 }

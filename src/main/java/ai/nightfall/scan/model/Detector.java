@@ -1,5 +1,6 @@
 package ai.nightfall.scan.model;
 
+import ai.nightfall.scan.model.redaction.RedactionConfig;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -40,6 +41,9 @@ public class Detector {
 
     @JsonProperty("exclusionRules")
     private List<ExclusionRule> exclusionRules;
+
+    @JsonProperty("redactionConfig")
+    private RedactionConfig redactionConfig;
 
     /**
      * Create an instance of a detector based on a pre-built Nightfall detector.
@@ -222,6 +226,26 @@ public class Detector {
         this.exclusionRules = exclusionRules;
     }
 
+    /**
+     * Returns the redaction configuration to-be-applied to this detector. This configuration is currently only
+     * supported for scanning plaintext, not for file scanning.
+     *
+     * @return the redaction configuration
+     */
+    public RedactionConfig getRedactionConfig() {
+        return redactionConfig;
+    }
+
+    /**
+     * Sets the redaction configuration to-be-applied to this detector. This configuration is currently only
+     * supported for scanning plaintext, not for file scanning.
+     *
+     * @param redactionConfig the redaction configuration
+     */
+    public void setRedactionConfig(RedactionConfig redactionConfig) {
+        this.redactionConfig = redactionConfig;
+    }
+
     @Override
     public String toString() {
         return "Detector{"
@@ -235,6 +259,7 @@ public class Detector {
                 + ", wordList=" + wordList
                 + ", contextRules=" + contextRules
                 + ", exclusionRules=" + exclusionRules
+                + ", redactionConfig=" + redactionConfig
                 + '}';
     }
 }

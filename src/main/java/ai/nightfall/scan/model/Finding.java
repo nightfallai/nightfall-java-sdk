@@ -12,6 +12,9 @@ public class Finding {
     @JsonProperty("finding")
     private String finding;
 
+    @JsonProperty("redactedFinding")
+    private String redactedFinding;
+
     @JsonProperty("beforeContext")
     private String beforeContext;
 
@@ -27,6 +30,9 @@ public class Finding {
     @JsonProperty("location")
     private Location location;
 
+    @JsonProperty("redactedLocation")
+    private Location redactedLocation;
+
     @JsonProperty("matchedDetectionRuleUUIDs")
     private List<UUID> matchedDetectionRuleUUIDs;
 
@@ -40,6 +46,16 @@ public class Finding {
      */
     public String getFinding() {
         return finding;
+    }
+
+    /**
+     * Returns the redacted finding. This will only be non-empty if redaction configuration was provided
+     * as part of the request payload.
+     *
+     * @return the redacted finding
+     */
+    public String getRedactedFinding() {
+        return redactedFinding;
     }
 
     /**
@@ -81,10 +97,20 @@ public class Finding {
     /**
      * Get the location of the finding.
      *
-     * @return the location where the data was in the original input file
+     * @return the location where the data was in the original content
      */
     public Location getLocation() {
         return location;
+    }
+
+    /**
+     * Get the location that the redacted finding would occupy in the original content if it were to replace
+     * the finding.
+     *
+     * @return the location that the data occupies in its redacted form with regard to the original content
+     */
+    public Location getRedactedLocation() {
+        return redactedLocation;
     }
 
     /**
@@ -109,11 +135,13 @@ public class Finding {
     public String toString() {
         return "Finding{"
                 + "finding='" + finding + '\''
+                + ", redactedFinding='" + redactedFinding + '\''
                 + ", beforeContext='" + beforeContext + '\''
                 + ", afterContext='" + afterContext + '\''
                 + ", detector=" + detector
                 + ", confidence='" + confidence + '\''
                 + ", location=" + location
+                + ", redactedLocation=" + redactedLocation
                 + ", matchedDetectionRuleUUIDs=" + matchedDetectionRuleUUIDs
                 + ", matchedDetectionRules=" + matchedDetectionRules
                 + '}';
