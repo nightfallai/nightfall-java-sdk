@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * <p>Four types of redaction are supported:
  * <ol>
- *     <li>Masking: replacing the characters of a finding with another character, such as '*'</li>
+ *     <li>Masking: replacing the characters of a finding with another character, such as '*' or '👀'</li>
  *     <li>Info Type Substitution: replacing the finding with the name of the detector it matched, such
  *     as CREDIT_CARD_NUMBER</li>
  *     <li>Substitution: replacing the finding with a custom string, such as "oh no!"</li>
