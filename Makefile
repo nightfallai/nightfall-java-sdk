@@ -1,11 +1,11 @@
 
 BUILD_DIR=build
 
-VERSION=0.1
+VERSION=1.0.0
 
-NAME=dlp-scan
-ARTIFACT=dlp-scan-$(VERSION).jar
-SHADED=dlp-scan-$(VERSION)-shaded.jar
+NAME=scan-api
+ARTIFACT=$(NAME)-$(VERSION).jar
+SHADED=$(NAME)-$(VERSION)-shaded.jar
 
 all: jar
 

@@ -1,5 +1,6 @@
 package ai.nightfall.scan.model;
 
+import ai.nightfall.scan.model.redaction.RedactionConfig;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.UUID;
 public class Detector {
 
     @JsonProperty("minConfidence")
-    private String minConfidence;
+    private Confidence minConfidence;
 
     @JsonProperty("minNumFindings")
     private int minNumFindings;
@@ -40,6 +41,9 @@ public class Detector {
 
     @JsonProperty("exclusionRules")
     private List<ExclusionRule> exclusionRules;
+
+    @JsonProperty("redactionConfig")
+    private RedactionConfig redactionConfig;
 
     /**
      * Create an instance of a detector based on a pre-built Nightfall detector.
@@ -87,17 +91,16 @@ public class Detector {
      *
      * @return the minimum confidence threshold required in order for a finding to be triggered
      */
-    public String getMinConfidence() {
+    public Confidence getMinConfidence() {
         return minConfidence;
     }
 
     /**
      * Set the minimum confidence.
      *
-     * @param minConfidence the minimum confidence threshold. Valid values: <code>VERY_UNLIKELY</code>,
-     *                      <code>UNLIKELY</code>, <code>POSSIBLE</code>, <code>LIKELY</code>, <code>VERY_LIKELY</code>.
+     * @param minConfidence the minimum confidence threshold.
      */
-    public void setMinConfidence(String minConfidence) {
+    public void setMinConfidence(Confidence minConfidence) {
         this.minConfidence = minConfidence;
     }
 
@@ -222,6 +225,26 @@ public class Detector {
         this.exclusionRules = exclusionRules;
     }
 
+    /**
+     * Returns the redaction configuration to-be-applied to this detector. This configuration is currently only
+     * supported for scanning plaintext, not for file scanning.
+     *
+     * @return the redaction configuration
+     */
+    public RedactionConfig getRedactionConfig() {
+        return redactionConfig;
+    }
+
+    /**
+     * Sets the redaction configuration to-be-applied to this detector. This configuration is currently only
+     * supported for scanning plaintext, not for file scanning.
+     *
+     * @param redactionConfig the redaction configuration
+     */
+    public void setRedactionConfig(RedactionConfig redactionConfig) {
+        this.redactionConfig = redactionConfig;
+    }
+
     @Override
     public String toString() {
         return "Detector{"
@@ -235,6 +258,7 @@ public class Detector {
                 + ", wordList=" + wordList
                 + ", contextRules=" + contextRules
                 + ", exclusionRules=" + exclusionRules
+                + ", redactionConfig=" + redactionConfig
                 + '}';
     }
 }
