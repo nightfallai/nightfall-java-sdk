@@ -9,8 +9,6 @@ import java.util.Arrays;
  */
 public class MaskConfig {
 
-    // TODO (emf): need to test if char works for UTF-8 char's: emojis, asian characters, ...
-
     @JsonProperty("maskingChar")
     private String maskingChar;
 
