@@ -69,14 +69,14 @@ try (NightfallClient c = NightfallClient.Builder.defaultClient()) {
 
     // Define some detectors to use to scan your data
     Detector creditCard = new Detector("CREDIT_CARD_NUMBER");
-    creditCard.setMinConfidence("LIKELY");
+    creditCard.setMinConfidence(Confidence.LIKELY);
     creditCard.setMinNumFindings(1);
     Detector ssn = new Detector("US_SOCIAL_SECURITY_NUMBER");
-    ssn.setMinConfidence("POSSIBLE");
+    ssn.setMinConfidence(Confidence.POSSIBLE);
     ssn.setMinNumFindings(1);
 
     // A rule contains a set of detectors to scan with
-    DetectionRule rule = new DetectionRule(Arrays.asList(creditCard, ssn), "ANY");
+    DetectionRule rule = new DetectionRule(Arrays.asList(creditCard, ssn), LogicalOp.ANY);
 
     List<String> payload = Arrays.asList("hello world", "my SSN is 678-99-8212", "4242-4242-4242-4242");
     ScanTextConfig config = ScanTextConfig.fromDetectionRuleUUIDs(Arrays.asList(rule), 20);
@@ -111,14 +111,14 @@ try (NightfallClient c = NightfallClient.Builder.defaultClient()) {
 
     // Define some detectors to use to scan your data
     Detector creditCard = new Detector("CREDIT_CARD_NUMBER");
-    creditCard.setMinConfidence("LIKELY");
+    creditCard.setMinConfidence(Confidence.LIKELY);
     creditCard.setMinNumFindings(1);
     Detector ssn = new Detector("US_SOCIAL_SECURITY_NUMBER");
-    ssn.setMinConfidence("POSSIBLE");
+    ssn.setMinConfidence(Confidence.POSSIBLE);
     ssn.setMinNumFindings(1);
 
     // A rule contains a set of detectors to scan with
-    DetectionRule rule = new DetectionRule(Arrays.asList(creditCard, ssn), "ANY");
+    DetectionRule rule = new DetectionRule(Arrays.asList(creditCard, ssn), LogicalOp.ANY);
 
     // File scans are conducted asynchronously, so provide a webhook route to an HTTPS server to send results to.
     String webhookResponseListenerURL = "https://my-service.com/nightfall/listener";

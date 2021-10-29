@@ -9,14 +9,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class ConfidenceAdjustment {
     @JsonProperty("fixedConfidence")
-    private String fixedConfidence;
+    private Confidence fixedConfidence;
 
     /**
      * Create a ConfidenceAdjustment object.
      *
      * @param fixedConfidence the confidence to adjust to if external criteria are met.
      */
-    public ConfidenceAdjustment(String fixedConfidence) {
+    public ConfidenceAdjustment(Confidence fixedConfidence) {
         this.fixedConfidence = fixedConfidence;
     }
 
@@ -25,7 +25,7 @@ public class ConfidenceAdjustment {
      *
      * @return the confidence to adjust to
      */
-    public String getFixedConfidence() {
+    public Confidence getFixedConfidence() {
         return fixedConfidence;
     }
 }

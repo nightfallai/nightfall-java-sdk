@@ -16,7 +16,7 @@ public class DetectionRule {
     private List<Detector> detectors;
 
     @JsonProperty("logicalOp")
-    private String logicalOp;
+    private LogicalOp logicalOp;
 
     @JsonProperty("name")
     private String name;
@@ -27,7 +27,7 @@ public class DetectionRule {
      * @param detectors a list of detectors
      * @param logicalOp a logical op: ANY or ALL
      */
-    public DetectionRule(List<Detector> detectors, String logicalOp) {
+    public DetectionRule(List<Detector> detectors, LogicalOp logicalOp) {
         this.detectors = detectors;
         this.logicalOp = logicalOp;
     }
@@ -39,7 +39,7 @@ public class DetectionRule {
      * @param logicalOp a logical op: ANY or ALL
      * @param name a name for the detection rule
      */
-    public DetectionRule(List<Detector> detectors, String logicalOp, String name) {
+    public DetectionRule(List<Detector> detectors, LogicalOp logicalOp, String name) {
         this.detectors = detectors;
         this.logicalOp = logicalOp;
         this.name = name;
@@ -68,7 +68,7 @@ public class DetectionRule {
      *
      * @return the logical op
      */
-    public String getLogicalOp() {
+    public LogicalOp getLogicalOp() {
         return logicalOp;
     }
 
@@ -77,7 +77,7 @@ public class DetectionRule {
      *
      * @param logicalOp a logical op; valid values <code>ANY</code> or <code>ALL</code>
      */
-    public void setLogicalOp(String logicalOp) {
+    public void setLogicalOp(LogicalOp logicalOp) {
         this.logicalOp = logicalOp;
     }
 

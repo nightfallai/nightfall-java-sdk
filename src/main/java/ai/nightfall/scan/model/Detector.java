@@ -13,7 +13,7 @@ import java.util.UUID;
 public class Detector {
 
     @JsonProperty("minConfidence")
-    private String minConfidence;
+    private Confidence minConfidence;
 
     @JsonProperty("minNumFindings")
     private int minNumFindings;
@@ -91,17 +91,16 @@ public class Detector {
      *
      * @return the minimum confidence threshold required in order for a finding to be triggered
      */
-    public String getMinConfidence() {
+    public Confidence getMinConfidence() {
         return minConfidence;
     }
 
     /**
      * Set the minimum confidence.
      *
-     * @param minConfidence the minimum confidence threshold. Valid values: <code>VERY_UNLIKELY</code>,
-     *                      <code>UNLIKELY</code>, <code>POSSIBLE</code>, <code>LIKELY</code>, <code>VERY_LIKELY</code>.
+     * @param minConfidence the minimum confidence threshold.
      */
-    public void setMinConfidence(String minConfidence) {
+    public void setMinConfidence(Confidence minConfidence) {
         this.minConfidence = minConfidence;
     }
 
