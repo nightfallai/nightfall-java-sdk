@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *     <li>Info Type Substitution: replacing the finding with the name of the detector it matched, such
  *     as CREDIT_CARD_NUMBER</li>
  *     <li>Substitution: replacing the finding with a custom string, such as "oh no!"</li>
- *     <li>Encryption: encryptiong the finding with an RSA public key</li>
+ *     <li>Encryption: encrypting the finding with an RSA public key</li>
  * </ol>
  */
 public class RedactionConfig {
