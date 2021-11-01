@@ -87,7 +87,7 @@ public class NightfallClient implements Closeable {
      * @throws IllegalArgumentException thrown if <code>request</code> is null
      * @throws NightfallRequestTimeoutException thrown if the request is aborted because the timeout is exceeded
      */
-    public ScanTextResponse scan(ScanTextRequest request) {
+    public ScanTextResponse scanText(ScanTextRequest request) {
         if (request == null) {
             throw new IllegalArgumentException("request must be non-null");
         }

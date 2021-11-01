@@ -82,7 +82,7 @@ try (NightfallClient c = NightfallClient.Builder.defaultClient()) {
     ScanTextConfig config = ScanTextConfig.fromDetectionRuleUUIDs(Arrays.asList(rule), 20);
     ScanTextRequest req = new ScanTextRequest(payload, config);
 
-    ScanTextResponse response = c.scan(req);
+    ScanTextResponse response = c.scanText(req);
     System.out.println("findings: " + response.getFindings());
 }
 ```
