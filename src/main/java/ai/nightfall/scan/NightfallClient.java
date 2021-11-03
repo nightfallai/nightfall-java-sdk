@@ -43,20 +43,19 @@ import java.util.concurrent.atomic.AtomicReference;
 public class NightfallClient implements Closeable {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
-
     private static final long wakeupDurationMillis = Duration.ofSeconds(15).toMillis();
-
     private static final int DEFAULT_RETRY_COUNT = 5;
-
     private static final String API_HOST = "https://api.nightfall.ai";
 
+    private final String apiHost;
     private final String apiKey;
     private final int fileUploadConcurrency;
     private final int retryCount;
     private final ExecutorService executor;
     private final OkHttpClient httpClient;
 
-    private NightfallClient(String apiKey, int fileUploadConcurrency, OkHttpClient httpClient) {
+    protected NightfallClient(String apiHost, String apiKey, int fileUploadConcurrency, OkHttpClient httpClient) {
+        this.apiHost = apiHost;
         this.apiKey = apiKey;
         this.fileUploadConcurrency = fileUploadConcurrency;
         this.retryCount = DEFAULT_RETRY_COUNT;
@@ -351,7 +350,7 @@ public class NightfallClient implements Closeable {
      */
     private <E> E issueRequest(
             String path, String method, MediaType mediaType, byte[] body, Headers headers, Class<E> responseClass) {
-        String url = API_HOST + path;
+        String url = this.apiHost + path;
         Request.Builder builder = new Request.Builder().url(url);
 
         if (headers != null) {
@@ -456,7 +455,7 @@ public class NightfallClient implements Closeable {
                     .writeTimeout(Duration.ofSeconds(60))
                     .connectionPool(cxnPool)
                     .build();
-            return new NightfallClient(readAPIKeyFromEnvironment(), 1, httpClient);
+            return new NightfallClient(API_HOST, readAPIKeyFromEnvironment(), 1, httpClient);
         }
 
         /**
@@ -589,7 +588,7 @@ public class NightfallClient implements Closeable {
                     .writeTimeout(this.writeTimeout)
                     .connectionPool(cxnPool)
                     .build();
-            return new NightfallClient(this.apiKey, this.fileUploadConcurrency, httpClient);
+            return new NightfallClient(API_HOST, this.apiKey, this.fileUploadConcurrency, httpClient);
         }
 
         private static String readAPIKeyFromEnvironment() {

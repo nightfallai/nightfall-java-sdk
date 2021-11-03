@@ -15,6 +15,20 @@ public class ScanFileResponse {
     @JsonProperty("message")
     private String message;
 
+    // appease jackson serialization
+    public ScanFileResponse() {}
+
+    /**
+     * Construct a new ScanFileResponse object.
+     *
+     * @param id the ID of the file to-be-scanned
+     * @param message the status message
+     */
+    public ScanFileResponse(UUID id, String message) {
+        this.id = id;
+        this.message = message;
+    }
+
     /**
      * Get the file ID.
      *

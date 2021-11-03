@@ -1,18 +1,19 @@
 package ai.nightfall.scan;
 
-import org.junit.Test;
-
+import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Unit tests for the webhook signature validator module.
+ */
 public class WebhookSignatureValidatorTest {
 
-    // 30 years -- apologies from 2021, employees of 2051
-    final Duration reallyLongTime = Duration.ofHours(24 * 365 * 30);
+    final Duration reallyLongTime = Duration.ofHours(24 * 365 * 1000);
 
     @Test
     public void testHappyPath() {
