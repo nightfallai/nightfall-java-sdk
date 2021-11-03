@@ -90,8 +90,12 @@ public class NightfallErrorResponse {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         NightfallErrorResponse that = (NightfallErrorResponse) o;
         return code == that.code && Objects.equals(message, that.message)
                 && Objects.equals(description, that.description)
