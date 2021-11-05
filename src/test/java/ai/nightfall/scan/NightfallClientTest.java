@@ -53,7 +53,7 @@ public class NightfallClientTest {
     }
 
     @Test
-    public void testScanText_InvalidArgs() {
+    public void testScanText_NullRequestArg() {
         assertThrows(IllegalArgumentException.class, () -> {
             NightfallClient client = new NightfallClient("host", "key", 1, new OkHttpClient());
             client.scanText(null);
