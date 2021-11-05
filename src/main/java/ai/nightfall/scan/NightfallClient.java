@@ -54,7 +54,8 @@ public class NightfallClient implements Closeable {
     private final ExecutorService executor;
     private final OkHttpClient httpClient;
 
-    protected NightfallClient(String apiHost, String apiKey, int fileUploadConcurrency, OkHttpClient httpClient) {
+    // package-visible for testing
+    NightfallClient(String apiHost, String apiKey, int fileUploadConcurrency, OkHttpClient httpClient) {
         this.apiHost = apiHost;
         this.apiKey = apiKey;
         this.fileUploadConcurrency = fileUploadConcurrency;
@@ -398,7 +399,7 @@ public class NightfallClient implements Closeable {
                 return objectMapper.readValue(response.body().bytes(), responseClass);
             } catch (IOException e) {
                 // If OkHTTP times out, allow retries
-                if (e.getMessage().equals("timeout")) {
+                if (e.getMessage().equalsIgnoreCase("timeout") || e.getMessage().equalsIgnoreCase("read timed out")) {
                     if (attempt >= this.retryCount - 1) {
                         throw new NightfallRequestTimeoutException("request timed out");
                     }
@@ -429,7 +430,6 @@ public class NightfallClient implements Closeable {
      * A builder class that configures, validates, then creates instances of a Nightfall Client.
      */
     public static class Builder {
-
         private String apiKey;
         private int fileUploadConcurrency = 1;
 

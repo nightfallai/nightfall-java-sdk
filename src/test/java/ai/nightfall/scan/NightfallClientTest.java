@@ -234,12 +234,58 @@ public class NightfallClientTest {
 
     @Test
     public void testScanFile_Timeout() {
-        // TODO: test provided caller timeout arg is exceeded
+        assertThrows(NightfallRequestTimeoutException.class, () -> {
+            try (MockWebServer server = new MockWebServer()) {
+                server.enqueue(new MockResponse().setBody("{\"id\": \"2eda1019-f991-4535-be9f-cecbe6b6c2eb\","
+                        + "\"fileSizeBytes\": 1738, \"mimeType\": \"text/plain\", \"chunkSize\": 10485760}"));
+                server.enqueue(new MockResponse().setResponseCode(204));
+                server.enqueue(new MockResponse().setBody("{\"id\": \"2eda1019-f991-4535-be9f-cecbe6b6c2eb\","
+                        + "\"fileSizeBytes\": 1738, \"mimeType\": \"text/plain\", \"chunkSize\": 10485760}"));
+                server.enqueue(new MockResponse().setBody("{\"id\": \"2eda1019-f991-4535-be9f-cecbe6b6c2eb\","
+                        + "\"message\": \"scan initiated\"}"));
+
+                NightfallClient c = new NightfallClient(getRequestURL(server), "key", 1, getHttpClient());
+                ScanFileRequest req = new ScanFileRequest(new ScanPolicy("foo", null, null), "foo");
+                Duration timeout = Duration.ofMillis(1);
+                c.scanFile(req, new ByteArrayInputStream(new byte[1738]), 1738, timeout);
+                fail("did not expect scan to succeed");
+            } catch (IOException e) {
+                fail("IOException during test: " + e.getMessage());
+            }
+        });
     }
 
     @Test
-    public void testScanFile_ThrownException() {
-        // TODO: test exception thrown
+    public void testScanFile_APIException() {
+        assertThrows(NightfallAPIException.class, () -> {
+            // use reference type to work around Java inner class limitations
+            final int[] reqCount = {0};
+
+            try (MockWebServer server = new MockWebServer()) {
+                final String successBody = "{\"id\": \"2eda1019-f991-4535-be9f-cecbe6b6c2eb\","
+                        + "\"fileSizeBytes\": 1738, \"mimeType\": \"text/plain\", \"chunkSize\": 10485760}";
+                final String errBody = "{\"code\": 400, \"message\": \"failure\", \"description\": \"failure\"}";
+                server.setDispatcher(new Dispatcher() {
+                    @NotNull
+                    @Override
+                    public MockResponse dispatch(@NotNull RecordedRequest r) {
+                        if (++reqCount[0] == 1) {
+                            return new MockResponse().setBody(successBody);
+                        }
+
+                        // fail chunk upload attempts
+                        return new MockResponse().setResponseCode(400).setBody(errBody);
+                    }
+                });
+
+                NightfallClient c = new NightfallClient(getRequestURL(server), "key", 1, getHttpClient());
+                ScanFileRequest req = new ScanFileRequest(new ScanPolicy("foo", null, null), "foo");
+                c.scanFile(req, new ByteArrayInputStream(new byte[1738]), 1738, null);
+                fail("did not expect scan to succeed");
+            } catch (IOException e) {
+                fail("IOException during test: " + e.getMessage());
+            }
+        });
     }
 
     private OkHttpClient getHttpClient() {
