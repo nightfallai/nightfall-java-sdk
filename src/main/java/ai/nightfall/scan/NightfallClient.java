@@ -43,20 +43,20 @@ import java.util.concurrent.atomic.AtomicReference;
 public class NightfallClient implements Closeable {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
-
     private static final long wakeupDurationMillis = Duration.ofSeconds(15).toMillis();
-
     private static final int DEFAULT_RETRY_COUNT = 5;
-
     private static final String API_HOST = "https://api.nightfall.ai";
 
+    private final String apiHost;
     private final String apiKey;
     private final int fileUploadConcurrency;
     private final int retryCount;
     private final ExecutorService executor;
     private final OkHttpClient httpClient;
 
-    private NightfallClient(String apiKey, int fileUploadConcurrency, OkHttpClient httpClient) {
+    // package-visible for testing
+    NightfallClient(String apiHost, String apiKey, int fileUploadConcurrency, OkHttpClient httpClient) {
+        this.apiHost = apiHost;
         this.apiKey = apiKey;
         this.fileUploadConcurrency = fileUploadConcurrency;
         this.retryCount = DEFAULT_RETRY_COUNT;
@@ -351,7 +351,7 @@ public class NightfallClient implements Closeable {
      */
     private <E> E issueRequest(
             String path, String method, MediaType mediaType, byte[] body, Headers headers, Class<E> responseClass) {
-        String url = API_HOST + path;
+        String url = this.apiHost + path;
         Request.Builder builder = new Request.Builder().url(url);
 
         if (headers != null) {
@@ -399,7 +399,7 @@ public class NightfallClient implements Closeable {
                 return objectMapper.readValue(response.body().bytes(), responseClass);
             } catch (IOException e) {
                 // If OkHTTP times out, allow retries
-                if (e.getMessage().equals("timeout")) {
+                if (e.getMessage().equalsIgnoreCase("timeout") || e.getMessage().equalsIgnoreCase("read timed out")) {
                     if (attempt >= this.retryCount - 1) {
                         throw new NightfallRequestTimeoutException("request timed out");
                     }
@@ -430,7 +430,6 @@ public class NightfallClient implements Closeable {
      * A builder class that configures, validates, then creates instances of a Nightfall Client.
      */
     public static class Builder {
-
         private String apiKey;
         private int fileUploadConcurrency = 1;
 
@@ -456,7 +455,7 @@ public class NightfallClient implements Closeable {
                     .writeTimeout(Duration.ofSeconds(60))
                     .connectionPool(cxnPool)
                     .build();
-            return new NightfallClient(readAPIKeyFromEnvironment(), 1, httpClient);
+            return new NightfallClient(API_HOST, readAPIKeyFromEnvironment(), 1, httpClient);
         }
 
         /**
@@ -589,7 +588,7 @@ public class NightfallClient implements Closeable {
                     .writeTimeout(this.writeTimeout)
                     .connectionPool(cxnPool)
                     .build();
-            return new NightfallClient(this.apiKey, this.fileUploadConcurrency, httpClient);
+            return new NightfallClient(API_HOST, this.apiKey, this.fileUploadConcurrency, httpClient);
         }
 
         private static String readAPIKeyFromEnvironment() {
