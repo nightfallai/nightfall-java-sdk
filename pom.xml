@@ -6,7 +6,7 @@
 
     <groupId>ai.nightfall</groupId>
     <artifactId>scan-api</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>The Nightfall Scanner provides Java bindings for our developer platform, which allows clients
@@ -92,6 +92,18 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
