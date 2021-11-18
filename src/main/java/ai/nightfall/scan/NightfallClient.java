@@ -46,6 +46,7 @@ public class NightfallClient implements Closeable {
     private static final long wakeupDurationMillis = Duration.ofSeconds(15).toMillis();
     private static final int DEFAULT_RETRY_COUNT = 5;
     private static final String API_HOST = "https://api.nightfall.ai";
+    private final String implVersion = loadImplVersion();
 
     private final String apiHost;
     private final String apiKey;
@@ -62,6 +63,14 @@ public class NightfallClient implements Closeable {
         this.retryCount = DEFAULT_RETRY_COUNT;
         this.executor = Executors.newFixedThreadPool(this.fileUploadConcurrency);
         this.httpClient = httpClient;
+    }
+
+    private String loadImplVersion() {
+        Package pkg = this.getClass().getPackage();
+        if (pkg == null) {
+            return "";
+        }
+        return pkg.getImplementationVersion();
     }
 
     /**
@@ -357,6 +366,10 @@ public class NightfallClient implements Closeable {
         if (headers != null) {
             builder.headers(headers);
         }
+        if (this.implVersion != null && !this.implVersion.equals("")) {
+            builder.addHeader("User-Agent", "nightfall-java-sdk/" + this.implVersion);
+        }
+
         builder.addHeader("Authorization", "Bearer " + this.apiKey);
 
         RequestBody reqBody = null;
