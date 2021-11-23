@@ -52,6 +52,7 @@ public class WebhookSignatureValidator {
      *                         since the Unix epoch.
      * @return true if the signature is valid and the request occurred within the allowed time threshold,
      *      otherwise false.
+     * @throws NumberFormatException if <code>requestTime</code> is not parsable as an integer
      */
     public boolean validate(String requestBody, byte[] signingSecret, String requestSignature, String requestTime) {
         if (requestBody == null || signingSecret == null || requestSignature == null || requestTime == null) {
@@ -59,8 +60,8 @@ public class WebhookSignatureValidator {
         }
 
         Instant now = Instant.now();
-        Instant reqTime = Instant.parse(requestTime);
-        if (now.minus(this.threshold).isAfter(reqTime)) {
+        Instant reqTime = Instant.ofEpochSecond(Long.parseLong(requestTime));
+        if (now.minus(this.threshold).isAfter(reqTime) || reqTime.isAfter(now)) {
             return false;
         }
 
