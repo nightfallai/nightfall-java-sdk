@@ -7,8 +7,11 @@ import ai.nightfall.scan.model.NightfallRequestTimeoutException;
 import ai.nightfall.scan.model.ScanFileRequest;
 import ai.nightfall.scan.model.ScanFileResponse;
 import ai.nightfall.scan.model.ScanPolicy;
+import ai.nightfall.scan.model.ScanTextConfig;
 import ai.nightfall.scan.model.ScanTextRequest;
 import ai.nightfall.scan.model.ScanTextResponse;
+import ai.nightfall.scan.model.redaction.RedactionConfig;
+import ai.nightfall.scan.model.redaction.SubstitutionConfig;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.mockwebserver.Dispatcher;
@@ -24,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,9 +46,11 @@ public class NightfallClientTest {
         try (MockWebServer server = new MockWebServer()) {
             server.enqueue(new MockResponse().setBody("{\"findings\": [[]]}"));
 
-            List<List<Finding>> expectedFindings = Arrays.asList(Arrays.asList());
+            List<List<Finding>> expectedFindings = Arrays.asList(Collections.emptyList());
             NightfallClient c = new NightfallClient(getRequestURL(server), "key", 1, getHttpClient());
-            ScanTextRequest req = new ScanTextRequest(null, null);
+            RedactionConfig defRedCfg = new RedactionConfig(new SubstitutionConfig("REDACTED"));
+            ScanTextConfig cfg = new ScanTextConfig(Arrays.asList(UUID.fromString("c08c6c43-85ca-40e5-8f46-7d1cf1e176a3")), Collections.emptyList(), 20, defRedCfg);
+            ScanTextRequest req = new ScanTextRequest(null, cfg);
             ScanTextResponse resp = c.scanText(req);
             assertEquals(expectedFindings, resp.getFindings());
         } catch (IOException e) {
