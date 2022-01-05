@@ -1,5 +1,6 @@
 package ai.nightfall.scan.model;
 
+import ai.nightfall.scan.model.redaction.RedactionConfig;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public class ScanTextConfig {
 
     @JsonProperty("contextBytes")
     private int contextBytes;
+
+    @JsonProperty("defaultRedactionConfig")
+    private RedactionConfig defaultRedactionConfig;
 
     /**
      * Create a scan configuration with the provided detection rules.
@@ -52,6 +56,22 @@ public class ScanTextConfig {
         this.detectionRuleUUIDs = detectionRuleUUIDs;
         this.detectionRules = detectionRules;
         this.contextBytes = contextBytes;
+    }
+
+    /**
+     * Create a scan configuration with the provided inline detection rules and detection rule UUIDs.
+     *
+     * @param detectionRuleUUIDs a list of detection rules to use to scan content (maximum length 10)
+     * @param detectionRules a list of detection rules to use to scan content (maximum length 10)
+     * @param contextBytes the number of bytes of context (leading and trailing) to return with any matched findings
+     * @param defaultRedactionConfig the default redaction configuration to apply to all detection rules
+     */
+    public ScanTextConfig(List<UUID> detectionRuleUUIDs, List<DetectionRule> detectionRules, int contextBytes,
+                          RedactionConfig defaultRedactionConfig) {
+        this.detectionRuleUUIDs = detectionRuleUUIDs;
+        this.detectionRules = detectionRules;
+        this.contextBytes = contextBytes;
+        this.defaultRedactionConfig = defaultRedactionConfig;
     }
 
     /**
@@ -108,12 +128,33 @@ public class ScanTextConfig {
         this.contextBytes = contextBytes;
     }
 
+    /**
+     * Get the default redaction configuration to-be-applied to all detection rules, unless a more specific redaction
+     * configuration is supplied at the detector level.
+     *
+     * @return the default redaction configuration
+     */
+    public RedactionConfig getDefaultRedactionConfig() {
+        return defaultRedactionConfig;
+    }
+
+    /**
+     * Set the default redaction configuration to-be-applied to all detection rules, unless a more specific redaction
+     * configuration is supplied at the detector level.
+     *
+     * @param defaultRedactionConfig the default redaction configuration
+     */
+    public void setDefaultRedactionConfig(RedactionConfig defaultRedactionConfig) {
+        this.defaultRedactionConfig = defaultRedactionConfig;
+    }
+
     @Override
     public String toString() {
         return "ScanTextConfig{"
                 + "detectionRuleUUIDs=" + detectionRuleUUIDs
                 + ", detectionRules=" + detectionRules
                 + ", contextBytes=" + contextBytes
+                + ", defaultRedactionConfig=" + defaultRedactionConfig
                 + '}';
     }
 }
