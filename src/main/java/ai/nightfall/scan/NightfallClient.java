@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -218,6 +219,8 @@ public class NightfallClient implements Closeable {
                 if (bytesRead < data.length && notLastChunk) {
                     semaphore.release();
                     throw new NightfallClientException("failed to read data from input stream");
+                } else if (bytesRead < data.length) {
+                    data = Arrays.copyOfRange(data, 0, bytesRead);
                 }
             } catch (IOException e) {
                 semaphore.release();
