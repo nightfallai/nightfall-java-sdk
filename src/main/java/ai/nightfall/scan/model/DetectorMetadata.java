@@ -1,5 +1,6 @@
 package ai.nightfall.scan.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.UUID;
@@ -8,6 +9,7 @@ import java.util.UUID;
  * A container for minimal information representing a detector. A detector may be uniquely identified by its UUID;
  * the name field helps provide human-readability.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DetectorMetadata {
 
     @JsonProperty("name")

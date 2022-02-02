@@ -59,6 +59,24 @@ public class NightfallClientTest {
     }
 
     @Test
+    public void testScanText_IgnoresUnrecognizedProperties() {
+        try (MockWebServer server = new MockWebServer()) {
+            // deserializer should not throw an exception just because of the unrecognized key `foo`
+            server.enqueue(new MockResponse().setBody("{\"findings\": [[]], \"foo\": \"bar\"}"));
+
+            List<List<Finding>> expectedFindings = Arrays.asList(Collections.emptyList());
+            NightfallClient c = new NightfallClient(getRequestURL(server), "key", 1, getHttpClient());
+            RedactionConfig defRedCfg = new RedactionConfig(new SubstitutionConfig("REDACTED"));
+            ScanTextConfig cfg = new ScanTextConfig(Arrays.asList(UUID.fromString("c08c6c43-85ca-40e5-8f46-7d1cf1e176a3")), Collections.emptyList(), 20, defRedCfg);
+            ScanTextRequest req = new ScanTextRequest(null, cfg);
+            ScanTextResponse resp = c.scanText(req);
+            assertEquals(expectedFindings, resp.getFindings());
+        } catch (IOException e) {
+            fail("IOException during test: " + e.getMessage());
+        }
+    }
+
+    @Test
     public void testScanText_NullRequestArg() {
         assertThrows(IllegalArgumentException.class, () -> {
             NightfallClient client = new NightfallClient("host", "key", 1, new OkHttpClient());
@@ -80,7 +98,7 @@ public class NightfallClientTest {
                 });
 
                 NightfallClient c = new NightfallClient(getRequestURL(server), "key", 1, getHttpClient());
-                ScanTextRequest req = new ScanTextRequest(null, null);
+                ScanTextRequest req = new ScanTextRequest(null, (ScanTextConfig) null);
                 c.scanText(req);
                 fail("did not expect scanText to succeed");
             } catch (IOException e) {
@@ -109,7 +127,7 @@ public class NightfallClientTest {
 
             List<List<Finding>> expectedFindings = Arrays.asList(Arrays.asList());
             NightfallClient c = new NightfallClient(getRequestURL(server), "key", 1, getHttpClient());
-            ScanTextRequest req = new ScanTextRequest(null, null);
+            ScanTextRequest req = new ScanTextRequest(null, (ScanTextConfig) null);
             ScanTextResponse resp = c.scanText(req);
             assertEquals(expectedFindings, resp.getFindings());
             assertEquals(reqCount[0], 3); // validate that rate limit responses were actually returned
@@ -135,7 +153,7 @@ public class NightfallClientTest {
                         .build().url().toString();
 
                 NightfallClient c = new NightfallClient(serverURL, "key", 1, getHttpClient());
-                ScanTextRequest req = new ScanTextRequest(null, null);
+                ScanTextRequest req = new ScanTextRequest(null, (ScanTextConfig) null);
                 c.scanText(req);
                 fail("did not expect scanText to succeed");
             } catch (IOException e) {
@@ -173,7 +191,7 @@ public class NightfallClientTest {
                         .build().url().toString();
 
                 NightfallClient c = new NightfallClient(serverURL, "key", 1, getHttpClient());
-                ScanTextRequest req = new ScanTextRequest(null, null);
+                ScanTextRequest req = new ScanTextRequest(null, (ScanTextConfig) null);
                 c.scanText(req);
                 fail("did not expect scanText to succeed");
             } catch (IOException e) {

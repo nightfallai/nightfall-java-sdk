@@ -1,10 +1,12 @@
 package ai.nightfall.scan.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * An object representing where a finding was discovered in content.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Location {
 
     @JsonProperty("byteRange")
