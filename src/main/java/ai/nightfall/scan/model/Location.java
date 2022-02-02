@@ -13,6 +13,9 @@ public class Location {
     @JsonProperty("codepointRange")
     private Range codepointRange;
 
+    @JsonProperty("commitHash")
+    private String commitHash;
+
     /**
      * Get the finding's byte range.
      *
@@ -32,11 +35,21 @@ public class Location {
         return codepointRange;
     }
 
+    /**
+     * Get the finding's commit hash.
+     *
+     * @return the hash of the commit in which a finding was detected if known.
+     */
+    public String getCommitHash() {
+        return commitHash;
+    }
+
     @Override
     public String toString() {
         return "Location{"
                 + "byteRange=" + byteRange
                 + ", codepointRange=" + codepointRange
+                + ", commitHash=" + commitHash
                 + '}';
     }
 
