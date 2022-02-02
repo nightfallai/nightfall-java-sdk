@@ -1,5 +1,6 @@
 package ai.nightfall.scan.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.UUID;
 /**
  * An object representing an occurrence of a configured detector (i.e. finding) in the provided data.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Finding {
     @JsonProperty("finding")
     private String finding;

@@ -1,5 +1,6 @@
 package ai.nightfall.scan.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.UUID;
@@ -7,6 +8,7 @@ import java.util.UUID;
 /**
  * The object returned by the Nightfall API when an (asynchronous) file scan request was successfully triggered.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ScanFileResponse {
 
     @JsonProperty("id")

@@ -1,5 +1,6 @@
 package ai.nightfall.scan.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
  * corresponds one-to-one with the input request <code>payload</code>, so all findings stored in a given sub-list
  * refer to matches that occurred in the <code>i</code>th index of the request payload.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ScanTextResponse {
     @JsonProperty("findings")
     private List<List<Finding>> findings;

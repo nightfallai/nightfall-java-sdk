@@ -14,6 +14,7 @@ import ai.nightfall.scan.model.ScanTextRequest;
 import ai.nightfall.scan.model.ScanTextResponse;
 import ai.nightfall.scan.model.UploadFileChunkRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.Call;
 import okhttp3.ConnectionPool;
@@ -43,7 +44,8 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class NightfallClient implements Closeable {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     private static final long wakeupDurationMillis = Duration.ofSeconds(15).toMillis();
     private static final int DEFAULT_RETRY_COUNT = 5;
     private static final String API_HOST = "https://api.nightfall.ai";
