@@ -31,20 +31,6 @@ public class ScanTextRequest {
     }
 
     /**
-     * Create a request to scan the provided <code>payload</code> against the provided scanning
-     * <code>policy</code> and <code>policyUUIDs</code>.
-     *
-     * @param payload the content to scan
-     * @param policy the configuration to use to scan the content
-     * @param policyUUIDs a list of UUIDs referring to pre-created policies to-be-used when scanning. Maximum 1.
-     */
-    public ScanTextRequest(List<String> payload, ScanTextConfig policy, List<UUID> policyUUIDs) {
-        this.payload = payload;
-        this.policy = policy;
-        this.policyUUIDs = policyUUIDs;
-    }
-
-    /**
      * Create a request to scan the provided <code>payload</code> against the provided
      * <code>policyUUIDs</code>.
      *

@@ -98,7 +98,7 @@ public class NightfallClientTest {
                 });
 
                 NightfallClient c = new NightfallClient(getRequestURL(server), "key", 1, getHttpClient());
-                ScanTextRequest req = new ScanTextRequest(null, null, null);
+                ScanTextRequest req = new ScanTextRequest(null, (ScanTextConfig) null);
                 c.scanText(req);
                 fail("did not expect scanText to succeed");
             } catch (IOException e) {
@@ -127,7 +127,7 @@ public class NightfallClientTest {
 
             List<List<Finding>> expectedFindings = Arrays.asList(Arrays.asList());
             NightfallClient c = new NightfallClient(getRequestURL(server), "key", 1, getHttpClient());
-            ScanTextRequest req = new ScanTextRequest(null, null, null);
+            ScanTextRequest req = new ScanTextRequest(null, (ScanTextConfig) null);
             ScanTextResponse resp = c.scanText(req);
             assertEquals(expectedFindings, resp.getFindings());
             assertEquals(reqCount[0], 3); // validate that rate limit responses were actually returned
@@ -153,7 +153,7 @@ public class NightfallClientTest {
                         .build().url().toString();
 
                 NightfallClient c = new NightfallClient(serverURL, "key", 1, getHttpClient());
-                ScanTextRequest req = new ScanTextRequest(null, null, null);
+                ScanTextRequest req = new ScanTextRequest(null, (ScanTextConfig) null);
                 c.scanText(req);
                 fail("did not expect scanText to succeed");
             } catch (IOException e) {
@@ -191,7 +191,7 @@ public class NightfallClientTest {
                         .build().url().toString();
 
                 NightfallClient c = new NightfallClient(serverURL, "key", 1, getHttpClient());
-                ScanTextRequest req = new ScanTextRequest(null, null, null);
+                ScanTextRequest req = new ScanTextRequest(null, (ScanTextConfig) null);
                 c.scanText(req);
                 fail("did not expect scanText to succeed");
             } catch (IOException e) {
