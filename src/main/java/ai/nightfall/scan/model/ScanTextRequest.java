@@ -1,5 +1,6 @@
 package ai.nightfall.scan.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -61,10 +62,13 @@ public class ScanTextRequest {
     }
 
     /**
-     * Get the request scan policy. Same as <code>getPolicy</code>, just provided for backwards compatibility.
+     * Get the request scan policy.
+     * @deprecated alias for <code>getPolicy</code>, just provided for backwards compatibility.
      *
      * @return the configuration to use to scan the <code>payload</code> data
      */
+    @Deprecated
+    @JsonIgnore
     public ScanTextConfig getConfig() {
         return getPolicy();
     }
@@ -79,10 +83,13 @@ public class ScanTextRequest {
     }
 
     /**
-     * Set the request scan policy. Same as <code>setPolicy</code>, just provided for backwards compatibility.
+     * Set the request scan policy.
+     * @deprecated alias for <code>setPolicy</code>, just provided for backwards compatibility.
      *
      * @param config the configuration to use to scan the <code>payload</code> data
      */
+    @Deprecated
+    @JsonIgnore
     public void setConfig(ScanTextConfig config) {
         setPolicy(config);
     }
