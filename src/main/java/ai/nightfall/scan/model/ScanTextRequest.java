@@ -63,9 +63,10 @@ public class ScanTextRequest {
 
     /**
      * Get the request scan policy.
-     * @deprecated alias for <code>getPolicy</code>, just provided for backwards compatibility.
      *
      * @return the configuration to use to scan the <code>payload</code> data
+     *
+     * @deprecated alias for <code>getPolicy</code>, just provided for backwards compatibility.
      */
     @Deprecated
     @JsonIgnore
@@ -84,9 +85,10 @@ public class ScanTextRequest {
 
     /**
      * Set the request scan policy.
-     * @deprecated alias for <code>setPolicy</code>, just provided for backwards compatibility.
      *
      * @param config the configuration to use to scan the <code>payload</code> data
+     *
+     * @deprecated alias for <code>setPolicy</code>, just provided for backwards compatibility.
      */
     @Deprecated
     @JsonIgnore
