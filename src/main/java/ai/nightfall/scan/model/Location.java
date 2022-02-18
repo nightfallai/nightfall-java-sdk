@@ -18,6 +18,12 @@ public class Location {
     @JsonProperty("commitHash")
     private String commitHash;
 
+    @JsonProperty("rowRange")
+    private Range rowRange;
+
+    @JsonProperty("columnRange")
+    private Range columnRange;
+
     /**
      * Get the finding's byte range.
      *
@@ -35,6 +41,24 @@ public class Location {
      */
     public Range getCodepointRange() {
         return codepointRange;
+    }
+
+    /**
+     * Get the finding's row range.
+     *
+     * @return the row range in which a finding was detected, if it is tabular.
+     */
+    public Range getRowRange() {
+        return rowRange;
+    }
+
+    /**
+     * Get the finding's column range.
+     *
+     * @return the column range in which a finding was detected, if it is tabular.
+     */
+    public Range getColumnRange() {
+        return columnRange;
     }
 
     /**
