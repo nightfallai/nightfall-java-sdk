@@ -63,29 +63,7 @@ snippet shows an example of how to scan using pre-built detectors.
 
 ####  Sample Code
 
-```java
-// By default, the client reads the API key from the environment variable NIGHTFALL_API_KEY
-try (NightfallClient c = NightfallClient.Builder.defaultClient()) {
-
-    // Define some detectors to use to scan your data
-    Detector creditCard = new Detector("CREDIT_CARD_NUMBER");
-    creditCard.setMinConfidence(Confidence.LIKELY);
-    creditCard.setMinNumFindings(1);
-    Detector ssn = new Detector("US_SOCIAL_SECURITY_NUMBER");
-    ssn.setMinConfidence(Confidence.POSSIBLE);
-    ssn.setMinNumFindings(1);
-
-    // A rule contains a set of detectors to scan with
-    DetectionRule rule = new DetectionRule(Arrays.asList(creditCard, ssn), LogicalOp.ANY);
-
-    List<String> payload = Arrays.asList("hello world", "my SSN is 678-99-8212", "4242-4242-4242-4242");
-    ScanTextConfig config = ScanTextConfig.fromDetectionRuleUUIDs(Arrays.asList(rule), 20);
-    ScanTextRequest req = new ScanTextRequest(payload, config);
-
-    ScanTextResponse response = c.scanText(req);
-    System.out.println("findings: " + response.getFindings());
-}
-```
+see [the TextScannerExample class](src/main/java/ai/nightfall/examples/TextScannerExample.java)
 
 ### Scanning Files
 
@@ -105,35 +83,7 @@ The results from the scan are delivered by webhook; for more information about s
 
 #### Sample Code
 
-```java
-// By default, the client reads the API key from the environment variable NIGHTFALL_API_KEY
-try (NightfallClient c = NightfallClient.Builder.defaultClient()) {
-
-    // Define some detectors to use to scan your data
-    Detector creditCard = new Detector("CREDIT_CARD_NUMBER");
-    creditCard.setMinConfidence(Confidence.LIKELY);
-    creditCard.setMinNumFindings(1);
-    Detector ssn = new Detector("US_SOCIAL_SECURITY_NUMBER");
-    ssn.setMinConfidence(Confidence.POSSIBLE);
-    ssn.setMinNumFindings(1);
-
-    // A rule contains a set of detectors to scan with
-    DetectionRule rule = new DetectionRule(Arrays.asList(creditCard, ssn), LogicalOp.ANY);
-
-    // File scans are conducted asynchronously, so provide a webhook route to an HTTPS server to send results to.
-    String webhookResponseListenerURL = "https://my-service.com/nightfall/listener";
-    ScanPolicy policy = ScanPolicy.fromDetectionRules(Arrays.asList(rule), webhookResponseListenerURL);
-    ScanFileRequest req = new ScanFileRequest(policy, "my request metadata");
-
-    // Upload the data to the API, then trigger the async scan
-    File file = new File("./super-secret-credit-cards.pdf");
-    try (InputStream stream = new FileInputStream(file)) {
-        ScanFileResponse response = c.scanFile(req, stream, file.length());
-        System.out.println("started scan: " + response.toString());
-    }
-}
-```
-
+see [the FileScannerExample class](src/main/java/ai/nightfall/examples/FileScannerExample.java)
 
 ## Contributing
 
