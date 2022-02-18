@@ -1,5 +1,6 @@
 package ai.nightfall.scan.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -65,6 +66,8 @@ public class ScanTextRequest {
      *
      * @return the configuration to use to scan the <code>payload</code> data
      */
+    @JsonIgnore
+    @Deprecated
     public ScanTextConfig getConfig() {
         return getPolicy();
     }
@@ -83,6 +86,7 @@ public class ScanTextRequest {
      *
      * @param config the configuration to use to scan the <code>payload</code> data
      */
+    @Deprecated
     public void setConfig(ScanTextConfig config) {
         setPolicy(config);
     }
