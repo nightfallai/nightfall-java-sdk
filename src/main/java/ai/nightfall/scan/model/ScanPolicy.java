@@ -1,5 +1,6 @@
 package ai.nightfall.scan.model;
 
+import ai.nightfall.scan.model.alert.AlertConfig;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.UUID;
  */
 public class ScanPolicy {
 
+    @Deprecated
     @JsonProperty("webhookURL")
     private String webhookURL;
 
@@ -20,6 +22,9 @@ public class ScanPolicy {
 
     @JsonProperty("detectionRuleUUIDs")
     private List<UUID> detectionRuleUUIDs;
+
+    @JsonProperty("alertConfig")
+    private AlertConfig alertConfig;
 
     /**
      * Create a scan policy with the provided detection rules.
@@ -50,6 +55,7 @@ public class ScanPolicy {
      * @param detectionRules a list of detection rules to use to scan content. maximum length 10.
      * @param detectionRuleUUIDs a list of detection rule UUIDs to use to scan content. maximum length 10.
      */
+    @Deprecated
     public ScanPolicy(String webhookURL, List<DetectionRule> detectionRules, List<UUID> detectionRuleUUIDs) {
         this.webhookURL = webhookURL;
         this.detectionRules = detectionRules;
@@ -57,10 +63,24 @@ public class ScanPolicy {
     }
 
     /**
-     * Get the webhook URL.
+     * Create a scan policy with the provided detection rules and detection rule UUIDs.
+     *
+     * @param alertConfig the alert configuration that Nightfall will use to deliver findings to external sources.
+     * @param detectionRules a list of detection rules to use to scan content. maximum length 10.
+     * @param detectionRuleUUIDs a list of detection rule UUIDs to use to scan content. maximum length 10.
+     */
+    public ScanPolicy(AlertConfig alertConfig, List<DetectionRule> detectionRules, List<UUID> detectionRuleUUIDs) {
+        this.alertConfig = alertConfig;
+        this.detectionRules = detectionRules;
+        this.detectionRuleUUIDs = detectionRuleUUIDs;
+    }
+
+    /**
+     * Get the webhook URL. Deprecated: use the <code>alertConfig</code> object instead.
      *
      * @return the webhook URL that Nightfall should deliver results to
      */
+    @Deprecated
     public String getWebhookURL() {
         return webhookURL;
     }
@@ -70,6 +90,7 @@ public class ScanPolicy {
      *
      * @param webhookURL the webhook URL that Nightfall should deliver results to
      */
+    @Deprecated
     public void setWebhookURL(String webhookURL) {
         this.webhookURL = webhookURL;
     }
@@ -109,4 +130,23 @@ public class ScanPolicy {
     public void setDetectionRuleUUIDs(List<UUID> detectionRuleUUIDs) {
         this.detectionRuleUUIDs = detectionRuleUUIDs;
     }
+
+    /**
+     * Get the alert configuration that specifies where alerts should be delivered when findings are detected.
+     *
+     * @return the alert configuration
+     */
+    public AlertConfig getAlertConfig() {
+        return alertConfig;
+    }
+
+    /**
+     * Sets the alert configuration that specifies where alerts should be delivered when findings are detected.
+     *
+     * @param alertConfig the alert configuration
+     */
+    public void setAlertConfig(AlertConfig alertConfig) {
+        this.alertConfig = alertConfig;
+    }
+
 }

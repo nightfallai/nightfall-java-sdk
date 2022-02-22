@@ -1,5 +1,6 @@
 package ai.nightfall.scan.model;
 
+import ai.nightfall.scan.model.alert.AlertConfig;
 import ai.nightfall.scan.model.redaction.RedactionConfig;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -22,6 +23,9 @@ public class ScanTextConfig {
 
     @JsonProperty("defaultRedactionConfig")
     private RedactionConfig defaultRedactionConfig;
+
+    @JsonProperty("alertConfig")
+    private AlertConfig alertConfig;
 
     /**
      * Create a scan configuration with the provided detection rules.
@@ -148,6 +152,24 @@ public class ScanTextConfig {
         this.defaultRedactionConfig = defaultRedactionConfig;
     }
 
+    /**
+     * Get the alert configuration that specifies where alerts should be delivered when findings are detected.
+     *
+     * @return the alert configuration
+     */
+    public AlertConfig getAlertConfig() {
+        return alertConfig;
+    }
+
+    /**
+     * Sets the alert configuration that specifies where alerts should be delivered when findings are detected.
+     *
+     * @param alertConfig the alert configuration
+     */
+    public void setAlertConfig(AlertConfig alertConfig) {
+        this.alertConfig = alertConfig;
+    }
+
     @Override
     public String toString() {
         return "ScanTextConfig{"
@@ -155,6 +177,7 @@ public class ScanTextConfig {
                 + ", detectionRules=" + detectionRules
                 + ", contextBytes=" + contextBytes
                 + ", defaultRedactionConfig=" + defaultRedactionConfig
+                + ", alertConfig=" + alertConfig
                 + '}';
     }
 }
