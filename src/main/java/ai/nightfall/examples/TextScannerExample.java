@@ -17,7 +17,6 @@ import java.util.List;
 /**
  * TextScannerExample provides a simple example of a program that sends text to Nightfall's detection API.
  * NIGHTFALL_API_KEY must be set as an environment variable.
- *
  */
 public class TextScannerExample {
     public static final String usage = "Usage: scanner <string> ...";

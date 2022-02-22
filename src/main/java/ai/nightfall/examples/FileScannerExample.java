@@ -20,8 +20,7 @@ import java.util.Arrays;
  * NIGHTFALL_API_KEY must be set as an environment variable, and webhookURL must be a running webhook endpoint
  * that is ready to receive a response.
  *
- * For an example webhook server, see https://docs.nightfall.ai/docs/creating-a-webhook-server
- *
+ * <p>For an example webhook server, see https://docs.nightfall.ai/docs/creating-a-webhook-server
  */
 public class FileScannerExample {
     public static final String usage = "Usage: scanner <webhookURL> <filename>";
