@@ -73,7 +73,7 @@ make jar
 and then set your API key as an environment variable and run the sample program (changing version number in the jar if necessary):
 
 ```bash
-export NIGHTFALL_API_KEY=NF-XXXXXX # replace with your API key
+export NIGHTFALL_API_KEY="NF-XXXXXX" # replace with your API key
 java -cp build/scan-api-1.1.0.jar ai.nightfall.examples.FileScannerExample /path/to/file
 ```
 
@@ -97,9 +97,7 @@ The results from the scan are delivered by webhook; for more information about s
 
 #### Sample Code
 
-To run the [the FileScannerExample class](src/main/java/ai/nightfall/examples/FileScannerExample.java)
-
-First, start a [webhook server](https://docs.nightfall.ai/docs/creating-a-webhook-server) to which results will be delivered. [ngrok](https://ngrok.com/) is a good way to expose a locally running webhook service on a publically-reachable URL:
+To run the [the FileScannerExample class](src/main/java/ai/nightfall/examples/FileScannerExample.java), first start a [webhook server](https://docs.nightfall.ai/docs/creating-a-webhook-server) to which results will be delivered. [ngrok](https://ngrok.com/) is a good way to expose a locally running webhook service on a publically-reachable URL:
 ```bash
 # ngrok creates a public webhook URL that tunnels to your local machine. Change the port if you're not listening on port 8075.
 ngrok http 8075
@@ -108,15 +106,15 @@ ngrok http 8075
 python webhook.py
 ```
 
-For the example, compile:
+Compile the SDK and example code:
 ```bash
 make jar
 ```
 
-and then set your API key as an environment variable and run the sample program (changing version number in the jar if necessary):
+then set your API key as an environment variable and run the sample program (changing version number in the jar if necessary):
 
 ```bash
-export NIGHTFALL_API_KEY=NF-XXXXXX # replace with your API key
+export NIGHTFALL_API_KEY="NF-XXXXXX" # replace with your API key
 NGROK_URL="myurl" # replace with the URL from running ngrok above
 java -cp build/scan-api-1.1.0.jar ai.nightfall.examples.FileScannerExample "$NGROK_URL" /path/to/file
 ```
