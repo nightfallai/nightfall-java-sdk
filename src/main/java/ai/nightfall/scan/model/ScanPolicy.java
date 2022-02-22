@@ -69,7 +69,6 @@ public class ScanPolicy {
      * @param detectionRules a list of detection rules to use to scan content. maximum length 10.
      * @param detectionRuleUUIDs a list of detection rule UUIDs to use to scan content. maximum length 10.
      */
-    @Deprecated
     public ScanPolicy(AlertConfig alertConfig, List<DetectionRule> detectionRules, List<UUID> detectionRuleUUIDs) {
         this.alertConfig = alertConfig;
         this.detectionRules = detectionRules;
