@@ -63,29 +63,21 @@ snippet shows an example of how to scan using pre-built detectors.
 
 ####  Sample Code
 
-```java
-// By default, the client reads the API key from the environment variable NIGHTFALL_API_KEY
-try (NightfallClient c = NightfallClient.Builder.defaultClient()) {
+To run the [the TextScannerExample class](src/main/java/ai/nightfall/examples/TextScannerExample.java),
 
-    // Define some detectors to use to scan your data
-    Detector creditCard = new Detector("CREDIT_CARD_NUMBER");
-    creditCard.setMinConfidence(Confidence.LIKELY);
-    creditCard.setMinNumFindings(1);
-    Detector ssn = new Detector("US_SOCIAL_SECURITY_NUMBER");
-    ssn.setMinConfidence(Confidence.POSSIBLE);
-    ssn.setMinNumFindings(1);
-
-    // A rule contains a set of detectors to scan with
-    DetectionRule rule = new DetectionRule(Arrays.asList(creditCard, ssn), LogicalOp.ANY);
-
-    List<String> payload = Arrays.asList("hello world", "my SSN is 678-99-8212", "4242-4242-4242-4242");
-    ScanTextConfig config = ScanTextConfig.fromDetectionRuleUUIDs(Arrays.asList(rule), 20);
-    ScanTextRequest req = new ScanTextRequest(payload, config);
-
-    ScanTextResponse response = c.scanText(req);
-    System.out.println("findings: " + response.getFindings());
-}
+first compile:
+```bash
+make jar
 ```
+
+and then set your API key as an environment variable and run the sample program (changing version number in the jar if necessary):
+
+```bash
+export NIGHTFALL_API_KEY="NF-XXXXXX" # replace with your API key
+java -cp build/scan-api-1.1.0.jar ai.nightfall.examples.FileScannerExample /path/to/file
+```
+
+
 
 ### Scanning Files
 
@@ -101,37 +93,30 @@ provides a single method that wraps the steps required to upload your file. Plea
 
 The file is uploaded synchronously, but as files can be arbitrarily large, the scan itself is conducted asynchronously.
 The results from the scan are delivered by webhook; for more information about setting up a webhook server, refer to
-[the docs](https://docs.nightfall.ai/docs/creating-a-webhook-server).
+[the webhook server docs](https://docs.nightfall.ai/docs/creating-a-webhook-server).
 
 #### Sample Code
 
-```java
-// By default, the client reads the API key from the environment variable NIGHTFALL_API_KEY
-try (NightfallClient c = NightfallClient.Builder.defaultClient()) {
+To run the [the FileScannerExample class](src/main/java/ai/nightfall/examples/FileScannerExample.java), first start a [webhook server](https://docs.nightfall.ai/docs/creating-a-webhook-server) to which results will be delivered. [ngrok](https://ngrok.com/) is a good way to expose a locally running webhook service on a publically-reachable URL:
+```bash
+# ngrok creates a public webhook URL that tunnels to your local machine. Change the port if you're not listening on port 8075.
+ngrok http 8075
+# copy the HTTPS URL ngrok displays, for example https://myurl.ngrok.io
+# supposing you're running a Python webhook server
+python webhook.py
+```
 
-    // Define some detectors to use to scan your data
-    Detector creditCard = new Detector("CREDIT_CARD_NUMBER");
-    creditCard.setMinConfidence(Confidence.LIKELY);
-    creditCard.setMinNumFindings(1);
-    Detector ssn = new Detector("US_SOCIAL_SECURITY_NUMBER");
-    ssn.setMinConfidence(Confidence.POSSIBLE);
-    ssn.setMinNumFindings(1);
+Compile the SDK and example code:
+```bash
+make jar
+```
 
-    // A rule contains a set of detectors to scan with
-    DetectionRule rule = new DetectionRule(Arrays.asList(creditCard, ssn), LogicalOp.ANY);
+then set your API key as an environment variable and run the sample program (changing version number in the jar if necessary):
 
-    // File scans are conducted asynchronously, so provide a webhook route to an HTTPS server to send results to.
-    String webhookResponseListenerURL = "https://my-service.com/nightfall/listener";
-    ScanPolicy policy = ScanPolicy.fromDetectionRules(Arrays.asList(rule), webhookResponseListenerURL);
-    ScanFileRequest req = new ScanFileRequest(policy, "my request metadata");
-
-    // Upload the data to the API, then trigger the async scan
-    File file = new File("./super-secret-credit-cards.pdf");
-    try (InputStream stream = new FileInputStream(file)) {
-        ScanFileResponse response = c.scanFile(req, stream, file.length());
-        System.out.println("started scan: " + response.toString());
-    }
-}
+```bash
+export NIGHTFALL_API_KEY="NF-XXXXXX" # replace with your API key
+NGROK_URL="myurl" # replace with the URL from running ngrok above
+java -cp build/scan-api-1.1.0.jar ai.nightfall.examples.FileScannerExample "$NGROK_URL" /path/to/file
 ```
 
 
