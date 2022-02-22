@@ -63,7 +63,21 @@ snippet shows an example of how to scan using pre-built detectors.
 
 ####  Sample Code
 
-see [the TextScannerExample class](src/main/java/ai/nightfall/examples/TextScannerExample.java)
+To run the [the TextScannerExample class](src/main/java/ai/nightfall/examples/TextScannerExample.java),
+
+first compile:
+```bash
+make jar
+```
+
+and then set your API key as an environment variable and run the sample program (changing version number in the jar if necessary):
+
+```bash
+export NIGHTFALL_API_KEY=NF-XXXXXX # replace with your API key
+java -cp build/scan-api-1.1.0.jar ai.nightfall.examples.FileScannerExample /path/to/file
+```
+
+
 
 ### Scanning Files
 
@@ -79,11 +93,34 @@ provides a single method that wraps the steps required to upload your file. Plea
 
 The file is uploaded synchronously, but as files can be arbitrarily large, the scan itself is conducted asynchronously.
 The results from the scan are delivered by webhook; for more information about setting up a webhook server, refer to
-[the docs](https://docs.nightfall.ai/docs/creating-a-webhook-server).
+[the webhook server docs](https://docs.nightfall.ai/docs/creating-a-webhook-server).
 
 #### Sample Code
 
-see [the FileScannerExample class](src/main/java/ai/nightfall/examples/FileScannerExample.java)
+To run the [the FileScannerExample class](src/main/java/ai/nightfall/examples/FileScannerExample.java)
+
+First, start a [webhook server](https://docs.nightfall.ai/docs/creating-a-webhook-server) to which results will be delivered. [ngrok](https://ngrok.com/) is a good way to expose a locally running webhook service on a publically-reachable URL:
+```bash
+# ngrok creates a public webhook URL that tunnels to your local machine. Change the port if you're not listening on port 8075.
+ngrok http 8075
+# copy the HTTPS URL ngrok displays, for example https://myurl.ngrok.io
+# supposing you're running a Python webhook server
+python webhook.py
+```
+
+For the example, compile:
+```bash
+make jar
+```
+
+and then set your API key as an environment variable and run the sample program (changing version number in the jar if necessary):
+
+```bash
+export NIGHTFALL_API_KEY=NF-XXXXXX # replace with your API key
+NGROK_URL="myurl" # replace with the URL from running ngrok above
+java -cp build/scan-api-1.1.0.jar ai.nightfall.examples.FileScannerExample "$NGROK_URL" /path/to/file
+```
+
 
 ## Contributing
 
