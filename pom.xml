@@ -86,6 +86,12 @@
                 <version>3.2.1</version>
                 <executions>
                     <execution>
+                        <configuration>
+                            <excludes>
+                                <exclude>ai/nightfall/examples</exclude>
+                                <exclude>ai/nightfall/examples/*</exclude>
+                            </excludes>
+                        </configuration>
                         <id>attach-sources</id>
                         <goals>
                             <goal>jar</goal>
@@ -103,6 +109,10 @@
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                     </archive>
+                    <excludes>
+                        <exclude>ai/nightfall/examples</exclude>
+                        <exclude>ai/nightfall/examples/*</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
@@ -111,6 +121,11 @@
                 <version>3.3.2</version>
                 <executions>
                     <execution>
+                        <configuration>
+                            <sourceFileExcludes>
+                                <exclude>ai/nightfall/examples/*.java</exclude>
+                            </sourceFileExcludes>
+                        </configuration>
                         <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
