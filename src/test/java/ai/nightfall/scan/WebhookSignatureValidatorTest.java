@@ -7,6 +7,7 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit tests for the webhook signature validator module.
@@ -61,5 +62,27 @@ public class WebhookSignatureValidatorTest {
         WebhookSignatureValidator validator = new WebhookSignatureValidator(reallyLongTime);
         boolean result = validator.validate(reqBody, secret, incorrectSignature, timestamp);
         assertFalse(result);
+    }
+
+    @Test
+    public void testBytesToHex() {
+        byte[][] tests = new byte[][]{
+            new byte[]{-1, 1},
+            new byte[]{6, 12, 12, 24},
+            new byte[]{-14, -63, -34},
+            new byte[]{0, 1, 126, 127, -128, -127, -126, -3, -2, -1},
+        };
+        String[] expectedResults = new String[]{
+            "ff01",
+            "060c0c18",
+            "f2c1de",
+            "00017e7f808182fdfeff"
+        };
+
+        WebhookSignatureValidator validator = new WebhookSignatureValidator(reallyLongTime);
+        for (int i = 0; i < tests.length; i++) {
+            String actual = validator.bytesToHex(tests[i]);
+            assertEquals(expectedResults[i], actual);
+        }
     }
 }
