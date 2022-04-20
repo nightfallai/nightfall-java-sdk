@@ -87,7 +87,7 @@ public class WebhookSignatureValidator {
     // as a minimum language level, here we are.
     String bytesToHex(byte[] in) {
         final StringBuilder builder = new StringBuilder();
-        for(byte b : in) {
+        for (byte b : in) {
             builder.append(String.format("%02x", b));
         }
         return builder.toString();
