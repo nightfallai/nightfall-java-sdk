@@ -3,7 +3,6 @@ package ai.nightfall.scan;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -80,7 +79,17 @@ public class WebhookSignatureValidator {
 
         String hashPayload = requestTime + ":" + requestBody;
         byte[] hashed = hmac.doFinal(hashPayload.getBytes(StandardCharsets.UTF_8));
-        String hexHash = String.format("%032x", new BigInteger(hashed));
+        String hexHash = bytesToHex(hashed);
         return hexHash.equals(requestSignature);
+    }
+
+    // Java 8-16 does not have a standard Hex converter class... so as long as this SDK supports Java 8
+    // as a minimum language level, here we are.
+    String bytesToHex(byte[] in) {
+        final StringBuilder builder = new StringBuilder();
+        for (byte b : in) {
+            builder.append(String.format("%02x", b));
+        }
+        return builder.toString();
     }
 }
