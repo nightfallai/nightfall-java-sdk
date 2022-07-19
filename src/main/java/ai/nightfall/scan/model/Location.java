@@ -18,6 +18,9 @@ public class Location {
     @JsonProperty("commitHash")
     private String commitHash;
 
+    @JsonProperty("commitAuthor")
+    private String commitAuthor;
+
     @JsonProperty("rowRange")
     private Range rowRange;
 
@@ -70,12 +73,22 @@ public class Location {
         return commitHash;
     }
 
+    /**
+     * Get the finding's commit author.
+     *
+     * @return the author of the commit in which a finding was detected if known.
+     */
+    public String getCommitAuthor() {
+        return commitAuthor;
+    }
+   
     @Override
     public String toString() {
         return "Location{"
                 + "byteRange=" + byteRange
                 + ", codepointRange=" + codepointRange
                 + ", commitHash=" + commitHash
+                + ", commitAuthor=" + commitAuthor
                 + '}';
     }
 
