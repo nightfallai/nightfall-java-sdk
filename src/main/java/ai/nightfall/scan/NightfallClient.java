@@ -19,8 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.Call;
 import okhttp3.ConnectionPool;
 import okhttp3.Headers;
-import okhttp3.MediaType;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -590,8 +590,8 @@ public class NightfallClient implements Closeable {
             return this;
         }
 
-         /**
-         * Adds an interceptor to the HTTP client used to preform requests
+        /**
+         * Adds an interceptor to the HTTP client used to preform requests.
          *
          * @param interceptor a OkHttpClient interceptor
          * @return the builder
@@ -620,7 +620,7 @@ public class NightfallClient implements Closeable {
                     .readTimeout(this.readTimeout)
                     .writeTimeout(this.writeTimeout)
                     .connectionPool(cxnPool);
-            for (Interceptor interceptor: this.interceptors) {
+            for (Interceptor interceptor : this.interceptors) {
                 httpClientBuilder = httpClientBuilder.addInterceptor(interceptor);
             }
             
