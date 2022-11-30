@@ -9,6 +9,12 @@ import java.util.Map;
  * This class can currently only be used by Nightfall partners.
  */
 public class ViolationConfig {
+    enum Action {
+        UNSPECIFIED,
+        ENCRYPT,
+        BLOCK;
+    }
+
     @JsonProperty("location")
     private String location;
 
@@ -19,7 +25,7 @@ public class ViolationConfig {
     private UserViolation user;
 
     @JsonProperty("action")
-    private ViolationAction action;
+    private Action action;
 
     @JsonProperty("actionPhrase")
     private String actionPhrase;
@@ -27,7 +33,7 @@ public class ViolationConfig {
     @JsonProperty("properties")
     private Map<String, String> properties;
 
-    public ViolationConfig(String location, String sublocation, UserViolation user, ViolationAction action, String actionPhrase, Map<String, String> properties) {
+    public ViolationConfig(String location, String sublocation, UserViolation user, Action action, String actionPhrase, Map<String, String> properties) {
         this.location = location;
         this.sublocation = sublocation;
         this.user = user;
@@ -95,7 +101,7 @@ public class ViolationConfig {
      *
      * @return the action associated with the created violation
      */
-    public ViolationAction getAction() {
+    public Action getAction() {
         return action;
     }
 
@@ -104,7 +110,7 @@ public class ViolationConfig {
      *
      * @param action the action associated with the created violation
      */
-    public void setAction(ViolationAction action) {
+    public void setAction(Action action) {
         this.action = action;
     }
 
