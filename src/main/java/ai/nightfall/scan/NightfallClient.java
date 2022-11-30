@@ -20,6 +20,7 @@ import okhttp3.Call;
 import okhttp3.ConnectionPool;
 import okhttp3.Headers;
 import okhttp3.MediaType;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -30,7 +31,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -456,6 +459,7 @@ public class NightfallClient implements Closeable {
         private Duration writeTimeout = Duration.ofSeconds(60);
         private int maxIdleConnections = 100;
         private Duration keepAliveDuration = Duration.ofSeconds(30);
+        private List<Interceptor> interceptors = new ArrayList<Interceptor>();
 
         /**
          * Builds and returns the client with all default values. The API key is loaded from the environment variable
@@ -586,6 +590,17 @@ public class NightfallClient implements Closeable {
             return this;
         }
 
+         /**
+         * Adds an interceptor to the HTTP client used to preform requests
+         *
+         * @param interceptor a OkHttpClient interceptor
+         * @return the builder
+         */
+        public Builder withInterceptor(Interceptor interceptor) {
+            this.interceptors.add(interceptor);
+            return this;
+        }
+
         /**
          * Builds the client using the configured values, falling back on defaults if any values
          * were not explicitly set.
@@ -600,12 +615,16 @@ public class NightfallClient implements Closeable {
 
             ConnectionPool cxnPool = new ConnectionPool(this.maxIdleConnections,
                     this.keepAliveDuration.toMillis(), TimeUnit.MILLISECONDS);
-            OkHttpClient httpClient = new OkHttpClient.Builder()
+            OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder()
                     .connectTimeout(this.connectionTimeout)
                     .readTimeout(this.readTimeout)
                     .writeTimeout(this.writeTimeout)
-                    .connectionPool(cxnPool)
-                    .build();
+                    .connectionPool(cxnPool);
+            for (Interceptor interceptor: this.interceptors) {
+                httpClientBuilder = httpClientBuilder.addInterceptor(interceptor);
+            }
+            
+            OkHttpClient httpClient = httpClientBuilder.build();
             return new NightfallClient(API_HOST, this.apiKey, this.fileUploadConcurrency, httpClient);
         }
 
