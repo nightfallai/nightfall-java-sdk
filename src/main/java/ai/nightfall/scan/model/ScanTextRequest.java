@@ -19,6 +19,9 @@ public class ScanTextRequest {
     @JsonProperty("policyUUIDs")
     private List<UUID> policyUUIDs;
 
+    @JsonProperty("violation")
+    private ViolationConfig violationConfig;
+
     /**
      * Create a request to scan the provided <code>payload</code> against the provided scanning
      * <code>policy</code>.
@@ -32,6 +35,20 @@ public class ScanTextRequest {
     }
 
     /**
+     * Create a request to scan the provided <code>payload</code> against the provided scanning
+     * <code>policy</code>.
+     *
+     * @param payload the content to scan
+     * @param policy the configuration to use to scan the content
+     * @param violationConfig the violation configuration to use on the scanned content
+     */
+    public ScanTextRequest(List<String> payload, ScanTextConfig policy, ViolationConfig violationConfig) {
+        this.payload = payload;
+        this.policy = policy;
+        this.violationConfig = violationConfig;
+    }
+
+    /**
      * Create a request to scan the provided <code>payload</code> against the provided
      * <code>policyUUIDs</code>.
      *
@@ -41,6 +58,20 @@ public class ScanTextRequest {
     public ScanTextRequest(List<String> payload, List<UUID> policyUUIDs) {
         this.payload = payload;
         this.policyUUIDs = policyUUIDs;
+    }
+
+    /**
+     * Create a request to scan the provided <code>payload</code> against the provided
+     * <code>policyUUIDs</code>.
+     *
+     * @param payload the content to scan
+     * @param policyUUIDs a list of UUIDs referring to pre-created policies to-be-used when scanning. Maximum 1.
+     * @param violationConfig the violation configuration to use on the scanned content
+     */
+    public ScanTextRequest(List<String> payload, List<UUID> policyUUIDs, ViolationConfig violationConfig) {
+        this.payload = payload;
+        this.policyUUIDs = policyUUIDs;
+        this.violationConfig = violationConfig;
     }
 
     /**
@@ -121,5 +152,23 @@ public class ScanTextRequest {
      */
     public void setPolicyUUIDs(List<UUID> policyUUIDs) {
         this.policyUUIDs = policyUUIDs;
+    }
+
+    /**
+     * Get the violation config to use when performing a scan.
+     *
+     * @return the violation config.
+     */
+    public ViolationConfig getViolationConfig() {
+        return violationConfig;
+    }
+
+    /**
+     * Set the violation config to use when performing a scan.
+     *
+     * @param violationConfig the violation config.
+     */
+    public void setViolationConfig(ViolationConfig violationConfig) {
+        this.violationConfig = violationConfig;
     }
 }
