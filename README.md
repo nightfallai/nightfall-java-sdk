@@ -128,6 +128,16 @@ tests for any new functionality you add.
 
 Refer to `CONTRIBUTING.md` for the full details.
 
+## Publishing new version
+
+Most of this process is automated but there are some final manual steps to release the new version
+1. Create a commit to update all the version numbers in this repo (`pom.xml`, `README`, `Makefile`)
+2. Once the commit is in `main` create a new tag `v*.*.*` (same version in the commit made). The tag will trigger a Github Action to build and push to the [Nexus Repository Manager](https://s01.oss.sonatype.org/#view-repositories)
+3. Once the job has successfully ran you can go to `Staging Repositories` in the Nexus Repository Manager and you should see a new version
+![Staged push on Nexus Repo Manager](images/staged.png)
+4. The staged version can be inspected in browser to ensure it is correct
+5. The staged version can be selected to take action on it `Drop` or `Release`
+
 ## License
 
 This code is licensed under the terms of the MIT License. See [here](https://opensource.org/licenses/MIT)
