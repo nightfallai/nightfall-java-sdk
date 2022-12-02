@@ -10,6 +10,9 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
+      - name: Install gpg
+        run: sudo apt-get install gnupg2 -y
+
       - name: Install Java and Maven
         uses: actions/setup-java@v3
         with:
