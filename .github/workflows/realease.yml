@@ -1,7 +1,10 @@
 name: Release
 
 # Run workflow on tags
-on: push
+on:
+  push:
+    tags:
+      - 'v*.*.*'
 
 jobs:
   release:
