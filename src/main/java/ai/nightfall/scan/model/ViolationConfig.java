@@ -33,7 +33,19 @@ public class ViolationConfig {
     @JsonProperty("properties")
     private Map<String, String> properties;
 
-    public ViolationConfig(String location, String sublocation, UserViolation user, Action action, String actionPhrase, Map<String, String> properties) {
+    /**
+     * Creates a new ViolationConfig object.
+     *
+     * @param location the location of the content to be scanned
+     * @param sublocation the sublocation of the content to be scanned
+     * @param user the user associated with the content to be scanned
+     * @param action the action to be taken on any findings from the scan request
+     * @param actionPhrase the phrase to describe the action to be taken on any findings
+     * @param properties a map of key value pairs containing metadata about the content to be scanned
+     */
+    public ViolationConfig(
+        String location, String sublocation, UserViolation user, 
+        Action action, String actionPhrase, Map<String, String> properties) {
         this.location = location;
         this.sublocation = sublocation;
         this.user = user;

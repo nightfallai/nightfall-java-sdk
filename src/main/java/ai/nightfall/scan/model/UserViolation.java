@@ -3,7 +3,7 @@ package ai.nightfall.scan.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * User details associated with a violation
+ * User details associated with a violation.
  */
 public class UserViolation {
     @JsonProperty("id")
@@ -12,6 +12,12 @@ public class UserViolation {
     @JsonProperty("displayName")
     private String displayName;
 
+    /**
+     * Creates a new UserViolation object.
+     *
+     * @param id the id of the user
+     * @param displayName the display name for the user
+     */
     public UserViolation(String id, String displayName) {
         this.id = id;
         this.displayName = displayName;
