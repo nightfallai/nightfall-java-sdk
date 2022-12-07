@@ -74,7 +74,7 @@ and then set your API key as an environment variable and run the sample program 
 
 ```bash
 export NIGHTFALL_API_KEY="NF-XXXXXX" # replace with your API key
-java -cp build/scan-api-1.2.1.jar ai.nightfall.examples.FileScannerExample /path/to/file
+java -cp build/scan-api-1.2.2.jar ai.nightfall.examples.FileScannerExample /path/to/file
 ```
 
 
@@ -116,7 +116,7 @@ then set your API key as an environment variable and run the sample program (cha
 ```bash
 export NIGHTFALL_API_KEY="NF-XXXXXX" # replace with your API key
 NGROK_URL="myurl" # replace with the URL from running ngrok above
-java -cp build/scan-api-1.2.1.jar ai.nightfall.examples.FileScannerExample "$NGROK_URL" /path/to/file
+java -cp build/scan-api-1.2.2.jar ai.nightfall.examples.FileScannerExample "$NGROK_URL" /path/to/file
 ```
 
 
