@@ -6,7 +6,7 @@
 
     <groupId>ai.nightfall</groupId>
     <artifactId>scan-api</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3-beta-1</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>The Nightfall Scanner provides Java bindings for our developer platform, which allows clients

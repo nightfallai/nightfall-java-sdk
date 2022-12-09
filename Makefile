@@ -1,7 +1,7 @@
 
 BUILD_DIR=build
 
-VERSION=1.2.2
+VERSION=1.2.3-beta-1
 
 NAME=scan-api
 ARTIFACT=$(NAME)-$(VERSION).jar
