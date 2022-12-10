@@ -9,7 +9,7 @@ import java.util.Map;
  * This class can currently only be used by Nightfall partners.
  */
 public class ViolationConfig {
-    enum Action {
+    public enum Action {
         UNSPECIFIED,
         ENCRYPT,
         BLOCK;
