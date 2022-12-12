@@ -19,6 +19,9 @@ public class ScanFileRequest {
     @JsonProperty("requestMetadata")
     private String requestMetadata;
 
+    @JsonProperty("violation")
+    private ViolationConfig violationConfig;
+
     /**
      * Create a new request to scan a file.
      *
@@ -33,12 +36,38 @@ public class ScanFileRequest {
     /**
      * Create a new request to scan a file.
      *
+     * @param policy the policy to use to scan the file.
+     * @param requestMetadata arbitrary metadata to pass along with the request; maximum length 10 KB.
+     * @param violationConfig the violation configuration to use on the scanned content.
+     */
+    public ScanFileRequest(ScanPolicy policy, String requestMetadata, ViolationConfig violationConfig) {
+        this.policy = policy;
+        this.requestMetadata = requestMetadata;
+        this.violationConfig = violationConfig;
+    }
+
+    /**
+     * Create a new request to scan a file.
+     *
      * @param policyUUID the UUID of an existing policy to use to scan the file.
      * @param requestMetadata arbitrary metadata to pass along with the request; maximum length 10 KB.
      */
     public ScanFileRequest(UUID policyUUID, String requestMetadata) {
         this.policyUUID = policyUUID;
         this.requestMetadata = requestMetadata;
+    }
+
+    /**
+     * Create a new request to scan a file.
+     *
+     * @param policyUUID the UUID of an existing policy to use to scan the file.
+     * @param requestMetadata arbitrary metadata to pass along with the request; maximum length 10 KB.
+     * @param violationConfig the violation configuration to use on the scanned content.
+     */
+    public ScanFileRequest(UUID policyUUID, String requestMetadata, ViolationConfig violationConfig) {
+        this.policyUUID = policyUUID;
+        this.requestMetadata = requestMetadata;
+        this.violationConfig = violationConfig;
     }
 
     /**
@@ -75,5 +104,23 @@ public class ScanFileRequest {
      */
     public void setRequestMetadata(String requestMetadata) {
         this.requestMetadata = requestMetadata;
+    }
+
+    /**
+     * Get the violation config to use when performing a scan.
+     *
+     * @return the violation config.
+     */
+    public ViolationConfig getViolationConfig() {
+        return violationConfig;
+    }
+
+    /**
+     * Set the violation config to use when performing a scan.
+     *
+     * @param violationConfig the violation config.
+     */
+    public void setViolationConfig(ViolationConfig violationConfig) {
+        this.violationConfig = violationConfig;
     }
 }
