@@ -9,6 +9,9 @@ import java.util.Map;
  * This class can currently only be used by Nightfall partners.
  */
 public class ViolationConfig {
+    /**
+     * Value used to indicate what remediation action will be taken on violations found.
+     */
     public enum Action {
         UNSPECIFIED,
         ENCRYPT,
